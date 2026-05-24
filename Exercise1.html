@@ -263,7 +263,7 @@
                         <div><a href="#deliveryrule">2-hour delivery rule</a></div>
                 </li>
                 <li><a href="#abuse">Cơ chế chống lạm dụng</a></li>
-                <li><a href="#metrics">Metric, rollout strategy</a></li>
+                <li><a href="#metrics">Success Metrics</a></li>
             </ul>
 
         </aside>
@@ -396,7 +396,7 @@
                 </p>
                 <div class="highlight">
                     Khi các đối thủ lớn đã validate thành công hướng đi này trên quy mô toàn cầu, đây là cơ hội để ZBS
-                    học hỏi mô hình đã thành công, sau đó localize phù hợp với hành vi người dùng và hệ sinh thái doanh
+                    cùng với hệ sinh thái 80 triệu người dùng học hỏi mô hình đã thành công, sau đó localize phù hợp với hành vi người dùng và hệ sinh thái doanh
                     nghiệp tại Việt Nam.
                 </div>
             </section>
@@ -512,7 +512,7 @@ ARCHIVED
                     <h3>Doanh nghiệp thiết kế workflow</h3>
 
                     <p>
-                        Merchant tạo workflow trực tiếp trên ZBS Portal.
+                        Doanh nghiệp tạo workflow trực tiếp trên ZBS Portal.
                     </p>
                     <p>
                         Ví dụ workflow đặt hàng có thể bao gồm các bước:
@@ -524,23 +524,39 @@ ARCHIVED
                         </tr>
 
                         <tr>
-                            <td>Step 1</td>
-                            <td>Order Confirmed</td>
+                            <td>Bước 1</td>
+                            <td>Xác nhận đơn</td>
                         </tr>
 
                         <tr>
-                            <td>Step 2</td>
-                            <td>Shipping Update</td>
+                            <td>Bước 2</td>
+                            <td>Thanh toán thành công</td>
                         </tr>
 
                         <tr>
-                            <td>Step 3</td>
-                            <td>Delivery Reminder</td>
+                            <td>Bước 3</td>
+                            <td>Đang chuẩn bị hàng/Đóng gói hàng hoá</td>
                         </tr>
 
                         <tr>
-                            <td>Step 4</td>
-                            <td>Delivered Successfully</td>
+                            <td>Bước 4</td>
+                            <td>Đã giao cho đơn vị vận chuyển </td>
+                        </tr>
+                        <tr>
+                            <td>Bước 5</td>
+                            <td>Đang giao hàng</td>
+                        </tr>
+                        <tr>
+                            <td>Bước 6</td>
+                            <td>Thông báo đơn hàng sắp đến (optional)</td>
+                        </tr>
+                        <tr>
+                            <td>Bước 7</td>
+                            <td>Hoàn tất giao hàng </td>
+                        </tr>
+                        <tr>
+                            <td>Bước 8</td>
+                            <td>chăm sóc sau mua </td>
                         </tr>
                     </table>
 
@@ -661,7 +677,7 @@ Phí base của bundle
 
                         <tr>
                             <td>Phí base của bundle</td>
-                            <td>Tổng chi phí của từng message trong workflow (theo giá stand alone)
+                            <td>Tổng phí của từng message được thiết kế ở workflow (theo giá standalone)
                                 / số bước thiết kế * 2</td>
                         </tr>
 
@@ -684,22 +700,22 @@ Phí base của bundle
                         </tr>
 
                         <tr>
-                            <td>Order Confirmed</td>
+                            <td>Xác nhận đơn</td>
                             <td>300đ</td>
                         </tr>
 
                         <tr>
-                            <td>Shipping Update</td>
+                            <td>Đang chuẩn bị hàng/Đóng gói hàng hoá</td>
                             <td>300đ</td>
                         </tr>
 
                         <tr>
-                            <td>Reminder</td>
+                            <td>Đang giao hàng</td>
                             <td>200đ</td>
                         </tr>
 
                         <tr>
-                            <td>Delivered</td>
+                            <td>Hoàn tất giao hàng</td>
                             <td>300đ</td>
                         </tr>
                     </table>
@@ -719,10 +735,14 @@ Phí base của bundle
                             <th>Component</th>
                             <th>Price</th>
                         </tr>
+                        <tr>
+                            <td>Phí message tính theo standalone</td>
+                            <td>300 + 300 + 200 + 300 = 1,100đ</td>
+                        </tr>
 
                         <tr>
                             <td>Phí base của bundle</td>
-                            <td>1100 / 4 × 2 = 550đ (1100đ - phí standalone / 4 bước × 2)</td>
+                            <td>1100 / 4 × 2 = 550đ (1100đ / 4 bước × 2)</td>
                         </tr>
 
                         <tr>
@@ -956,15 +976,40 @@ delivery_time - send_time <= 2 giờ
                             <td>Tỷ lệ sử dụng bundle</td>
                             <td>Đo adoption của doanh nghiệp</td>
                         </tr>
-
+                        <tr>
+                            <td>Tỷ lệ doanh nghiệp dịch chuyển từ standalone message sang bundle</td>
+                            <td>Đo adoption của doanh nghiệp</td>
+                        </tr>
+                        <tr>
+                            <td>Tỷ lệ doanh nghiệp dịch chuyển từ bundle sang standalone message</td>
+                            <td>Đo adoption của doanh nghiệp</td>
+                        </tr>
                         <tr>
                             <td>Tỷ lệ hoàn thành workflow</td>
                             <td>Đo chất lượng communication</td>
+                        </tr>
+                        <tr>
+                            <td>Tỷ lệ doanh nghiệp sử dụng extra message</td>
+                            <td>Đảm bảo trust & chống spam</td>
                         </tr>
 
                         <tr>
                             <td>Tỷ lệ phát hiện abuse</td>
                             <td>Đảm bảo trust & safety</td>
+                        </tr>
+
+                        <tr>
+                            <td>Tỷ lệ lỗi của message trong workflow</td>
+                            <td>Đảm bảo quality service</td>
+                        </tr>
+
+                        <tr>
+                            <td>TTL của mỗi workflow</td>
+                            <td>Đảm bảo trust & tránh abuse</td>
+                        </tr>
+                        <tr>
+                            <td>Thống kê số bước của mỗi workflow mà doanh nghiệp thiết kế</td>
+                            <td>Đảm bảo doanh thu & điều chỉnh giá</td>
                         </tr>
 
                         <tr>

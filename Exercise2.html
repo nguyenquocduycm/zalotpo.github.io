@@ -172,10 +172,35 @@
         }
 
         /* Diagrams for workflow */
-        .diagram-grid{display:flex;flex-direction:column;gap:18px;margin-top:18px}
-        .diagram-card{background:#fff;border:1px solid #e6eefb;padding:12px;border-radius:12px;display:flex;flex-direction:column;align-items:center;width:100%}
-        .diagram-card img{max-width:100%;height:auto;border-radius:8px}
-        .diagram-caption{margin-top:8px;color:#64748b;font-size:13px}
+        .diagram-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-top: 18px
+        }
+
+        .diagram-card {
+            background: #fff;
+            border: 1px solid #e6eefb;
+            padding: 12px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%
+        }
+
+        .diagram-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px
+        }
+
+        .diagram-caption {
+            margin-top: 8px;
+            color: #64748b;
+            font-size: 13px
+        }
 
         .phone-preview {
             margin-top: 20px;
@@ -217,6 +242,7 @@
             }
 
         }
+
         /* Consolidated global styles are defined earlier; duplicate block removed to avoid conflicts */
 
         .card {
@@ -465,7 +491,7 @@ Approval Unit = Entire Template
             <div class="warning">
                 Điều này làm chậm tốc độ triển khai campaign,
                 tăng workload moderation,
-                và hạn chế khả năng scale của merchant.
+                và hạn chế khả năng scale của doanh nghiệp.
             </div>
 
         </div>
@@ -542,12 +568,12 @@ Approval Unit = Individual Asset
         <div class="card">
             <h2>4. Workflow kiểm duyệt mới</h2>
             <div class="diagram-grid">
-                <p> workflow approve một asset</p>
+                <p> Workflow approve một asset</p>
                 <div class="diagram-card">
                     <img src="Diagram1.png" alt="Diagram 1 - Quy trình kiểm duyệt asset" />
                     <div class="diagram-caption">Hình 1 — Quy trình kiểm duyệt asset</div>
                 </div>
-                <p> workflow approve template</p>
+                <p> Workflow approve template</p>
                 <div class="diagram-card">
                     <img src="Diagram2.png" alt="Diagram 2 - Workflow approve template" />
                     <div class="diagram-caption">Hình 2 — Workflow approve template</div>
@@ -620,201 +646,201 @@ Approval Unit = Individual Asset
             <h2>6. Prototype Template Builder</h2>
             <div class="container">
 
-                    <div class="prototype">
+                <div class="prototype">
 
-                        <div class="template-builder">
+                    <div class="template-builder">
 
-                            <!-- LEFT PANEL -->
-                            <div class="panel">
+                        <!-- LEFT PANEL -->
+                        <div class="panel">
 
-                                <h3>
-                                    Template Configuration
-                                </h3>
+                            <h3>
+                                Template Configuration
+                            </h3>
 
-                                <!-- TEMPLATE NAME -->
-                                <div style="margin-top:24px;">
+                            <!-- TEMPLATE NAME -->
+                            <div style="margin-top:24px;">
 
-                                    <label>
-                                        Template Name
-                                    </label>
+                                <label>
+                                    Template Name
+                                </label>
 
-                                    <div class="input-box">
-                                        order_delivery_update
-                                    </div>
-
+                                <div class="input-box">
+                                    order_delivery_update
                                 </div>
-
-                                <!-- BODY TEXT -->
-                                <div style="margin-top:24px;">
-
-                                    <label>
-                                        Body Text
-                                    </label>
-
-                                    <div class="input-box" style="min-height:120px;">
-                                        Đơn hàng #12345 của bạn đang được giao.
-                                        Dự kiến giao trong hôm nay.
-                                    </div>
-
-                                </div>
-
-                                <!-- TRUSTED LOGO ASSET -->
-                                <div style="margin-top:24px;">
-
-                                    <label>
-                                        Trusted Logo Asset
-                                    </label>
-
-                                    <div class="asset-selector">
-
-                                        <a class="asset-link">
-                                            Browse Library
-                                        </a>
-
-                                        <div>
-                                            logo_asset_id = logo_123
-                                            <br />
-                                            <span style="font-size:13px;color:#64748b;">
-                                                Used in 42 templates
-                                            </span>
-                                        </div>
-
-                                        <div class="badge approved">
-                                            Approved
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                                <!-- TRUSTED BANNER ASSET -->
-                                <div style="margin-top:24px;">
-
-                                    <label>
-                                        Trusted Banner Asset
-                                    </label>
-
-                                    <div class="asset-selector">
-
-                                        <a class="asset-link">
-                                            Browse Library
-                                        </a>
-
-                                        <div>
-                                            image_asset_id = img_456
-                                            <br />
-                                            <span style="font-size:13px;color:#64748b;">
-                                                Used in 42 templates
-                                            </span>
-                                        </div>
-
-                                        <div class="badge approved">
-                                            Approved
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                                <!-- CTA ASSET -->
-                                <div style="margin-top:24px;">
-
-                                    <label>
-                                        CTA Asset
-                                    </label>
-
-                                    <div class="asset-selector">
-
-                                        <a class="asset-link">
-                                            Browse Library
-                                        </a>
-
-                                        <div>
-                                            cta_asset_id = cta_789
-                                            <br />
-                                            <span style="font-size:13px;color:#64748b;">
-                                                Used in 42 templates
-                                            </span>
-                                        </div>
-
-                                        <div class="badge approved">
-                                            Approved
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-
 
                             </div>
 
-                            <!-- RIGHT PANEL -->
-                            <div class="preview">
+                            <!-- BODY TEXT -->
+                            <div style="margin-top:24px;">
 
-                                <h3>
-                                    Live Message Preview
-                                </h3>
+                                <label>
+                                    Body Text
+                                </label>
 
-                                <div class="phone-preview">
+                                <div class="input-box" style="min-height:120px;">
+                                    Đơn hàng #12345 của bạn đang được giao.
+                                    Dự kiến giao trong hôm nay.
+                                </div>
 
-                                    <!-- HEADER -->
-                                    <div style="
+                            </div>
+
+                            <!-- TRUSTED LOGO ASSET -->
+                            <div style="margin-top:24px;">
+
+                                <label>
+                                    Trusted Logo Asset
+                                </label>
+
+                                <div class="asset-selector">
+
+                                    <a class="asset-link">
+                                        Browse Library
+                                    </a>
+
+                                    <div>
+                                        logo_asset_id = logo_123
+                                        <br />
+                                        <span style="font-size:13px;color:#64748b;">
+                                            Used in 42 templates
+                                        </span>
+                                    </div>
+
+                                    <div class="badge approved">
+                                        Approved
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- TRUSTED BANNER ASSET -->
+                            <div style="margin-top:24px;">
+
+                                <label>
+                                    Trusted Banner Asset
+                                </label>
+
+                                <div class="asset-selector">
+
+                                    <a class="asset-link">
+                                        Browse Library
+                                    </a>
+
+                                    <div>
+                                        image_asset_id = img_456
+                                        <br />
+                                        <span style="font-size:13px;color:#64748b;">
+                                            Used in 42 templates
+                                        </span>
+                                    </div>
+
+                                    <div class="badge approved">
+                                        Approved
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- CTA ASSET -->
+                            <div style="margin-top:24px;">
+
+                                <label>
+                                    CTA Asset
+                                </label>
+
+                                <div class="asset-selector">
+
+                                    <a class="asset-link">
+                                        Browse Library
+                                    </a>
+
+                                    <div>
+                                        cta_asset_id = cta_789
+                                        <br />
+                                        <span style="font-size:13px;color:#64748b;">
+                                            Used in 42 templates
+                                        </span>
+                                    </div>
+
+                                    <div class="badge approved">
+                                        Approved
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+                        <!-- RIGHT PANEL -->
+                        <div class="preview">
+
+                            <h3>
+                                Live Message Preview
+                            </h3>
+
+                            <div class="phone-preview">
+
+                                <!-- HEADER -->
+                                <div style="
               display:flex;
               align-items:center;
               margin-bottom:18px;
             ">
 
-                                        <div style="
+                                    <div style="
                 width:48px;
                 height:48px;
                 border-radius:50%;
                 background:#2563eb;
                 margin-right:12px;
               ">
-                                        </div>
-
-                                        <div>
-                                            <strong>ABC Shop Official Account</strong>
-                                            <br />
-                                            <span style="font-size:13px;color:#64748b;">
-                                                Zalo Business Message
-                                            </span>
-                                        </div>
-
                                     </div>
 
-                                    <!-- IMAGE -->
-                                    <img src="https://dummyimage.com/600x260/dbeafe/1e3a8a&text=Trusted+Banner" style="
+                                    <div>
+                                        <strong>ABC Shop Official Account</strong>
+                                        <br />
+                                        <span style="font-size:13px;color:#64748b;">
+                                            Zalo Business Message
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                                <!-- IMAGE -->
+                                <img src="https://dummyimage.com/600x260/dbeafe/1e3a8a&text=Trusted+Banner" style="
                 width:100%;
                 border-radius:16px;
                 margin-bottom:18px;
               " />
 
-                                    <!-- MESSAGE -->
-                                    <div class="message-box">
+                                <!-- MESSAGE -->
+                                <div class="message-box">
 
-                                        Đơn hàng #12345 của bạn đang được giao.
-                                        Dự kiến giao trong hôm nay.
-
-                                    </div>
-
-                                    <!-- CTA -->
-                                    <div class="cta">
-                                        Theo dõi đơn hàng
-                                    </div>
+                                    Đơn hàng #12345 của bạn đang được giao.
+                                    Dự kiến giao trong hôm nay.
 
                                 </div>
 
-
+                                <!-- CTA -->
+                                <div class="cta">
+                                    Theo dõi đơn hàng
+                                </div>
 
                             </div>
+
+
 
                         </div>
 
                     </div>
 
-                
+                </div>
+
+
 
             </div>
             <!---<div class="prototype">
@@ -949,7 +975,7 @@ Approval Unit = Individual Asset
                     <td>Cập nhật Asset (new)</td>
                     <td>cập nhật nội dung bên trong của 1 asset</td>
                 </tr>
-                
+
                 <tr>
                     <td>Cập nhật Asset status (new)</td>
                     <td>Cập nhật trạng thái của một asset</td>
@@ -958,7 +984,7 @@ Approval Unit = Individual Asset
                     <td>Ghi mới lịch sử chỉnh sửa Asset (new)</td>
                     <td>ghi thông tin lịch sử chỉnh sửa của một asset</td>
                 </tr>
-                
+
                 <tr>
                     <td>hiển thị danh sách template bị ảnh hưởng bởi 1 asset (new)</td>
                     <td>hiển thị các template sử dụng một asset cụ thể</td>
@@ -996,10 +1022,144 @@ Approval Unit = Individual Asset
                     <td>gửi thông báo khi có sự kiện xảy ra (asset approve/ reject)</td>
                 </tr>
             </table>
+            <br /><br />
+            <h3>7.1. Impact Template API: hiển thị danh sách template bị ảnh hưởng bởi 1 asset</h3>
+            <p>
+                Khi một asset bị được update version mới hoặc xoá,
+                API này sẽ trả về danh sách các template đang sử dụng asset đó,
+                giúp doanh nghiệp nhanh chóng xác định và cập nhật các template bị ảnh hưởng.
+            </p>
+            <p>
+                Trước khi chỉnh sửa hoặc ngừng sử dụng một tài sản, doanh nghiệp cần hiểu:
+            </p>
 
+            <ul style="margin-left:20px;">
+                <li>những template nào bị ảnh hưởng</li>
+                <li>số lượng campaigns hiện tại đang sử dụng asset</li>
+                <li>tác động vận hành tiềm ẩn</li>
+            </ul>
+            <div class="flow">
+                <pre>
+GET /v1/assets/{asset_id}/impacted-templates/limit=10&offset=0
+
+Response
+
+{
+  "asset_id": "logo_123",
+
+  "total_impacted_templates": 42,
+
+  "templates": [
+
+    {
+      "template_id": "tpl_1001",
+      "template_name": "delivery_update",
+      "status": "ACTIVE",
+      "last_used_at": "2026-05-20"
+    },
+
+    {
+      "template_id": "tpl_1002",
+      "template_name": "payment_reminder",
+      "status": "ACTIVE",
+      "last_used_at": "2026-05-22"
+    }
+
+  ]
+}
+                </pre>
+            </div>
+            <div class="warning">
+
+
+                <br /><br />
+
+                Nếu một logo được sử dụng bởi 5.000 mẫu, việc xóa hoặc cập nhật nó một
+                cách thiếu cân nhắc có thể gây ảnh hưởng lớn trên toàn doanh nghiệp.
+
+            </div>
+            <br /><br />
+            <h3>7.2. Bulk Template Migration API: thay đổi tất cả các template sang asset mới</h3>
+            <p>
+                Doanh nghiệp cần có khả năng nâng cấp
+                toàn bộ template bị ảnh hưởng
+                sang phiên bản asset mới nhất đã được approve.
+            </p>
+            <div class="flow">
+                <pre>
+POST /v1/assets/{asset_id}/bulk-migrate
+
+Request
+
+{
+  "from_version": 1,
+  "to_version": 2,
+
+  "migration_scope": "ALL_ACTIVE_TEMPLATES"
+}
+
+Response
+
+{
+  "migration_job_id": "job_789",
+
+  "total_templates": 42,
+
+  "status": "PROCESSING" / "COMPLETED" / "FAILED"
+}
+                </pre>
+            </div>
+            </br></br>
+            <h3>Luồng Migration</h3>
+
+            <div class="flow">
+                <pre>
+                logo_v1
+                ↓
+                được sử dụng bởi 42 template
+
+                Doanh nghiệp upload:
+                logo_v2
+                ↓
+                được approve
+
+                Doanh nghiệp thực hiện:
+                Bulk Migration API
+                ↓
+                Hệ thống tự động cập nhật:
+                42 template
+                ↓
+                Template hiện tại sẽ tham chiếu đến:
+                logo_v2
+                </pre>
+            </div>
+            </br></br>
+            <table>
+
+                <tr>
+                    <th>Chiến Lược Migration</th>
+                    <th>Hành Vi</th>
+                </tr>
+
+                <tr>
+                    <td>Migration tự động</td>
+                    <td>Cập nhật ngay toàn bộ template đang hoạt động sau khi asset mới được approve</td>
+                </tr>
+
+                <tr>
+                    <td>Migration chọn lọc</td>
+                    <td>Merchant tự chọn template cần cập nhật</td>
+                </tr>
+
+                <tr>
+                    <td>Hỗ trợ rollback</td>
+                    <td>Khôi phục asset version cũ nếu xảy ra lỗi</td>
+                </tr>
+
+            </table>
         </div>
 
-        
+
 
         <div class="card">
 
