@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PicklePoo — COURT BOOKING </title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1e293b;
+            line-height: 1.7;
+        }
+
+        .container {
+            width: 1100px;
+            margin: auto;
+            padding: 50px 0;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            color: #0f172a;
+        }
+
+        h2 {
+            margin-top: 50px;
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #0f172a;
+        }
+
+        h3 {
+            margin-top: 30px;
+            margin-bottom: 14px;
+            font-size: 22px;
+            color: #1e293b;
+        }
+
+        p {
+            margin-bottom: 14px;
+        }
+
+        ul {
+            margin-left: 22px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+        }
+
+        .highlight {
+            background: #e0f2fe;
+            border-left: 6px solid #0284c7;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .warning {
+            background: #fef3c7;
+            border-left: 6px solid #d97706;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .flow {
+            background: #0f172a;
+            color: #93c5fd;
+            padding: 25px;
+            border-radius: 16px;
+            margin-top: 20px;
+            font-family: monospace;
+            overflow: auto;
+            line-height: 2;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th {
+            background: #0f172a;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        table td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #64748b;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>PICKLEPOO — COURT BOOKING</h1>
+
+        <p class="subtitle">
+            Product Proposal — Senior Product Owner Perspective
+        </p>
+
+        <div class="card">
+
+            <h2>1. Tổng Quan</h2>
+
+            <p>
+                Pickleball đang phát triển rất nhanh tại Việt Nam, kéo theo nhu cầu đặt sân ngày càng tăng.
+                Tuy nhiên, trải nghiệm booking hiện tại ở nhiều cụm sân vẫn còn nhiều bất cập:
+            </p>
+
+            <ul>
+                <li>đặt sân qua chat hoặc điện thoại</li>
+                <li>khó kiểm tra sân còn trống</li>
+                <li>thiếu minh bạch về lịch sân</li>
+                <li>dễ xảy ra double booking</li>
+                <li>người dùng phải xác nhận thủ công nhiều lần</li>
+                <li>quá trình thanh toán chưa tối ưu</li>
+            </ul>
+
+            <div class="warning">
+                Mục tiêu của sản phẩm không chỉ là “cho phép người dùng đặt sân”,
+                mà quan trọng hơn là xây dựng một booking flow nhanh, rõ ràng và đáng tin cậy.
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h2>2. Product Goal</h2>
+
+            <ul>
+                <li>giúp người dùng đặt sân nhanh hơn</li>
+                <li>giảm booking conflict</li>
+                <li>tối ưu trải nghiệm booking trên web</li>
+            </ul>
+
+        </div>
+
+        <div class="card">
+
+            <h2>3. Booking Flow</h2>
+
+            <div class="flow">
+                <pre>
+STEP 1 → Điền thông tin chung
+STEP 2 → Chọn thời gian đặt
+STEP 3 → Chọn sân
+STEP 4 → Booking validation
+STEP 5 → Payment reservation screen
+        </pre>
+            </div>
+
+            <h3>Step 1 — Điền Thông Tin Chung</h3>
+
+            <p>Người dùng nhập:</p>
+
+            <ul>
+                <li>Họ tên</li>
+                <li>Email</li>
+                <li>Số điện thoại</li>
+                <li>Số lượng người chơi</li>
+            </ul>
+
+            <h3>Step 2 — Chọn Thời Gian Đặt</h3>
+
+            <p>
+                Người dùng có thể:
+            </p>
+
+            <ul>
+                <li>đặt theo từng shift</li>
+                <li>hoặc đặt lịch cố định theo tháng</li>
+            </ul>
+
+            <h3>Step 3 — Chọn Sân</h3>
+
+            <ul>
+                <li>xem danh sách sân còn trống / trạng thái sân</li>
+                <li>xem sơ đồ sân (Image)</li>
+            </ul>
+
+            <p>
+                Tính năng “Xem sơ đồ sân” giúp tăng booking confidence,
+                giảm confusion và tăng trust vào hệ thống.
+            </p>
+
+            <h3>Step 4 — Booking Validation</h3>
+
+            <p>
+                Sau khi người dùng bấm “Tiếp tục”, hệ thống sẽ:
+            </p>
+
+            <ul>
+                <li>kiểm tra slot còn trống</li>
+                <li>Xử lý case liên quan đến confict sân</li>
+                <li>validate booking conflict</li>
+                <li>chuyển sang trạng thái giữ sân</li>
+            </ul>
+
+            <h3>Step 4.1 — confirm booking nếu bị conflict</h3>
+
+            <p>
+                Hệ thống sẽ hiển thị thông báo nếu có conflict sân
+                và yêu cầu người dùng xác nhận lại:
+            </p>
+
+            <ul>
+                <li>Hệ thống sussgest sân khác với khung giờ đã chọn</li>
+                <li>Hệ thống gợi ý khung giờ khác gần nhất nếu không còn sân</li>
+            </ul>
+
+            <h3>Step 5 — Payment Reservation Screen</h3>
+
+            <p>
+                Sau khi validation thành công:
+            </p>
+
+            <ul>
+                <li>hệ thống tạm giữ sân trong 10 phút</li>
+                <li>tạo booking ở trạng thái “Pending Payment”</li>
+                <li>bắt đầu countdown timer</li>
+            </ul>
+
+            <p>
+                Màn hình thanh toán hiển thị:
+            </p>
+
+            <ul>
+                <li>thông tin người đặt</li>
+                <li>lịch đã chọn</li>
+                <li>sân đã chọn</li>
+                <li>booking summary</li>
+                <li>countdown giữ chỗ</li>
+            </ul>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>4. Những Vấn Đề Cần Phải Xử Lý Trong Tính Năng Đặt Sân</h2>
+
+            <h3>4.1 Idempotency — Người dùng bấm thanh toán nhiều lần</h3>
+
+            <p>
+                Trong quá trình thanh toán, người dùng có thể:
+            </p>
+
+            <ul>
+                <li>double click nút thanh toán</li>
+                <li>refresh trang</li>
+                <li>retry payment do mạng chậm</li>
+            </ul>
+
+            <p>
+                Điều này dễ dẫn đến:
+            </p>
+
+            <ul>
+                <li>duplicate booking</li>
+                <li>duplicate payment</li>
+                <li>dữ liệu không đồng nhất</li>
+            </ul>
+
+            <div class="highlight">
+                Hệ thống cần sử dụng Idempotency Key để đảm bảo:
+                <br /><br />
+                mỗi transaction chỉ được xử lý một lần,
+                request gửi lại sẽ trả về kết quả cũ,
+                không tạo booking hoặc payment trùng lặp.
+            </div>
+
+            <h3>4.2 Recurring Booking Conflict</h3>
+
+            <p>
+                Người dùng có thể đặt lịch cố định theo tháng,
+                ví dụ:
+            </p>
+
+            <ul>
+                <li>thứ 3 & thứ 5 hàng tuần</li>
+                <li>sân số 1</li>
+                <li>khung giờ 7PM–9PM</li>
+            </ul>
+
+            <p>
+                Tuy nhiên, không phải lúc nào sân đó cũng còn trống.
+            </p>
+
+            <div class="highlight">
+                Hệ thống cần:
+                <ul>
+                    <li>ưu tiên đổi sang sân khác cùng khung giờ</li>
+                    <li>nếu không còn sân, gợi ý khung giờ gần nhất</li>
+                    <li>gửi notification để người dùng xác nhận lại</li>
+                </ul>
+            </div>
+
+            <p>
+                Mục tiêu là maximize booking success rate thay vì reject booking ngay lập tức.
+            </p>
+
+            <h3>4.3 Race Condition — Hai người cùng đặt một sân cùng lúc</h3>
+
+            <p>
+                Hai người dùng có thể:
+            </p>
+
+            <ul>
+                <li>chọn cùng một sân</li>
+                <li>cùng một khung giờ</li>
+                <li>và bấm thanh toán gần như đồng thời</li>
+            </ul>
+
+            <p>
+                Nếu không xử lý đúng, double booking sẽ xảy ra.
+            </p>
+
+            <div class="highlight">
+                Hệ thống cần sử dụng:
+                <ul>
+                    <li>database transaction</li>
+                    <li>row-level locking</li>
+                    <li>reservation validation</li>
+                </ul>
+                để đảm bảo chỉ một transaction được phép thành công.
+            </div>
+
+            <h3>4.4 Temporary Reservation Lock — Giữ chỗ 10 phút</h3>
+
+            <p>
+                Khi người dùng chuyển sang màn hình thanh toán:
+            </p>
+
+            <ul>
+                <li>hệ thống cần lock slot tạm thời trong 10 phút</li>
+                <li>tạo booking ở trạng thái “Pending Payment”</li>
+            </ul>
+
+            <p>
+                Nếu thanh toán thành công:
+            </p>
+
+            <ul>
+                <li>booking chuyển sang trạng thái “Confirmed”</li>
+            </ul>
+
+            <p>
+                Nếu timeout:
+            </p>
+
+            <ul>
+                <li>hệ thống tự động release slot</li>
+                <li>trả sân về inventory</li>
+            </ul>
+
+            <div class="highlight">
+                Cơ chế này giúp tăng trust cho người dùng,
+                tránh conflict thanh toán và đảm bảo trải nghiệm booking ổn định.
+            </div>
+
+            <h3>4.5 Database Consistency — Ưu tiên Strong Consistency</h3>
+
+            <p>
+                Vì đây là hệ thống booking & payment theo thời gian thực,
+                hệ thống cần ưu tiên:
+            </p>
+
+            <ul>
+                <li>ACID transaction</li>
+                <li>strong consistency</li>
+                <li>transactional integrity</li>
+            </ul>
+
+            <div class="highlight">
+                Do đó, hệ thống nên sử dụng RDBMS thay vì NoSQL để đảm bảo dữ liệu booking luôn chính xác.
+            </div>
+
+            <h3>4.6 Message Queue — Xử lý hậu trường bất đồng bộ</h3>
+
+            <p>
+                Sau khi thanh toán thành công,
+                hệ thống còn nhiều tác vụ phía sau:
+            </p>
+
+            <ul>
+                <li>gửi email</li>
+                <li>gửi notification</li>
+                <li>tạo invoice</li>
+                <li>cập nhật analytics</li>
+                <li>cập nhật loyalty</li>
+            </ul>
+
+            <p>
+                Nếu xử lý synchronous:
+            </p>
+
+            <ul>
+                <li>response sẽ chậm</li>
+                <li>ảnh hưởng trải nghiệm người dùng</li>
+            </ul>
+
+            <div class="highlight">
+                Hệ thống nên sử dụng Message Queue
+                để xử lý background jobs bất đồng bộ,
+                giúp response nhanh hơn và tăng khả năng scale hệ thống.
+            </div>
+
+            <h3>4.7 SAGA Pattern — Compensation Flow</h3>
+
+            <p>
+                Booking flow gồm nhiều bước:
+            </p>
+
+            <ul>
+                <li>lock slot</li>
+                <li>tạo booking</li>
+                <li>thanh toán</li>
+                <li>cập nhật trạng thái</li>
+                <li>gửi invoice</li>
+            </ul>
+
+            <p>
+                Nếu một bước bị lỗi giữa chừng,
+                hệ thống có thể rơi vào trạng thái inconsistency.
+            </p>
+
+            <div class="highlight">
+                Hệ thống cần sử dụng SAGA Pattern để:
+                <ul>
+                    <li>rollback transaction khi cần</li>
+                    <li>thực hiện compensation action</li>
+                    <li>đảm bảo eventual consistency</li>
+                </ul>
+            </div>
+
+            <p>
+                Ví dụ:
+            </p>
+
+            <ul>
+                <li>payment fail → release slot</li>
+                <li>booking fail → rollback booking</li>
+                <li>invoice fail → retry async processing</li>
+            </ul>
+
+        </div>
+
+        <div class="card">
+
+            <h2>5. Kết Luận</h2>
+
+            <div class="highlight">
+                Tính năng Court Booking không nên chỉ được xem là một form đặt sân thông thường.
+                <br /><br />
+                Mà cần được thiết kế như:
+                <br /><br />
+                một hệ thống quản lý inventory và reservation theo thời gian thực.
+                <br /><br />
+                Điều này giúp:
+                <ul>
+                    <li>tăng trải nghiệm người dùng</li>
+                    <li>giảm conflict vận hành</li>
+                    <li>tăng conversion thanh toán</li>
+                    <li>tạo nền tảng scale cho hệ thống booking trong tương lai</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            PicklePoo — Court Booking
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TPO Assignment</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Inter, Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f172a;
+        }
+
+        .container {
+            width: min(1100px, 92%);
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 18px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #64748b;
+            line-height: 1.8;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 28px;
+            padding: 34px;
+            box-shadow: 0 14px 40px rgba(15, 23, 42, 0.08);
+            transition: 0.25s;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .card h2 {
+            font-size: 30px;
+            margin-bottom: 14px;
+        }
+
+        .card p {
+            color: #64748b;
+            line-height: 1.8;
+            margin-bottom: 26px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 14px 22px;
+            border-radius: 14px;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+        }
+
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        @media(max-width:768px) {
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="hero">
+            <h1>Senior TPO Assignment</h1>
+
+            <p>
+                Zalo - VNG Corporation - Design by Quoc Duy Nguyen
+            </p>
+        </div>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <div class="badge">Exercise 1</div>
+
+                <h2>Multi-Message Bundle</h2>
+
+                <p>
+                    Xây dựng cơ chế bundle theo workflow, trong đó các tin nhắn liên quan đến cùng quy trình nghiệp
+                    vụ sẽ được nhóm lại và tính phí theo bundle thay vì tính riêng từng tin nhắn.
+                </p>
+
+                <a href="Exercise1.html" class="btn">
+                    Open Exercise 1 →
+                </a>
+
+            </div>
+
+            <div class="card">
+
+                <div class="badge">Exercise 2</div>
+
+                <h2>Trusted Assets</h2>
+
+
+
+                <p>
+                    Trusted Assets biến các component reusable
+                    thành những asset được quản lý và approve độc lập.
+                </p>
+                <a href="Exercise2.html" class="btn">
+                    Open Exercise 2 →
+                </a>
+            </div>
+
+            <div class="card">
+
+                <div class="badge">Exercise 3</div>
+
+                <h2>Pickleball Application</h2>
+
+                <p>
+                    Mục tiêu của sản phẩm không chỉ là “cho phép người dùng đặt sân”,
+                    mà quan trọng hơn là xây dựng một booking flow nhanh, rõ ràng và đáng tin cậy.
+                </p>
+
+                <a href="Exercise3.html" class="btn">
+                    Open Exercise 3 →
+                </a>
+
+            </div>
+
+            <div class="card">
+
+                <div class="badge">Interactive Demo</div>
+
+                <h2>Pickleball Booking Demo</h2>
+
+
+
+                <a href="Demo.html" class="btn">
+                    Open Demo →
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="footer">
+            Senior Technical Product Owner Assignment Submission
+        </div>
+
+    </div>
+
+</body>
+
+</html>

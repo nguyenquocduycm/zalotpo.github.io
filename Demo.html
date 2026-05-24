@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PickleHub — Demo Đặt Sân Pickleball</title>
+
+    <style>
+        :root {
+            --bg: #f6f9fc;
+            --card: #ffffff;
+            --muted: #64748b;
+            --accent: #2563eb;
+            --primary: #0f172a;
+            --success: #16a34a
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--primary);
+            font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased
+        }
+
+        .header {
+            background: linear-gradient(90deg, var(--primary), #071024);
+            color: white;
+            padding: 14px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            box-shadow: 0 6px 20px rgba(2, 6, 23, 0.12)
+        }
+
+        .header h1 {
+            font-size: 20px
+        }
+
+        .nav {
+            display: flex;
+            gap: 18px;
+            font-size: 14px
+        }
+
+        .nav span {
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px
+        }
+
+        .nav span:hover {
+            background: rgba(255, 255, 255, 0.04)
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 28px auto;
+            padding: 0 18px
+        }
+
+        .hero {
+            background: var(--card);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 12px 36px rgba(2, 6, 23, 0.06);
+            margin-bottom: 24px
+        }
+
+        .hero-banner {
+            height: 360px;
+            background: url('https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?q=80&w=1600&auto=format&fit=crop') center/cover;
+            position: relative
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(2, 6, 23, 0.75), rgba(2, 6, 23, 0.15));
+            display: flex;
+            align-items: flex-end;
+            padding: 28px;
+            color: white
+        }
+
+        .hero-overlay h2 {
+            font-size: 36px;
+            margin-bottom: 8px;
+            font-weight: 700
+        }
+
+        .hero-content {
+            padding: 26px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 16px
+        }
+
+        .info-card {
+            background: #fbfdff;
+            border: 1px solid #e9f2ff;
+            padding: 14px;
+            border-radius: 12px
+        }
+
+        .booking-layout {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 28px;
+            margin-top: 20px;
+            align-items: start
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 22px rgba(2, 6, 23, 0.04);
+            margin-bottom: 18px
+        }
+
+        h3 {
+            font-size: 16px;
+            margin-bottom: 16px;
+            color: var(--primary);
+            font-weight: 700
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px
+        }
+
+        .form-grid.row-2 {
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px
+        }
+
+        .field label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #0f172a
+        }
+
+        .field input,
+        .field select {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            font-size: 14px;
+            background: #fbfdff
+        }
+
+        .field input:focus,
+        .field select:focus {
+            outline: none;
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.05);
+            border-color: var(--accent)
+        }
+
+        .shift-list {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px
+        }
+
+        .shift {
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid #e6eefb;
+            background: var(--card);
+            cursor: pointer
+        }
+
+        .shift.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent)
+        }
+
+        .court-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 12px
+        }
+
+        .court-card {
+            border: 1px solid #e9f2ff;
+            border-radius: 12px;
+            padding: 14px;
+            background: #fbfdff;
+            cursor: pointer;
+            transition: transform .18s ease
+        }
+
+        .court-card:hover {
+            transform: translateY(-4px)
+        }
+
+        .court-card.active {
+            border: 2px solid var(--accent);
+            background: #f0f7ff
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            background: #dcfce7;
+            color: #166534;
+            font-weight: 700
+        }
+
+        .map-btn {
+            margin-top: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer
+        }
+
+        .summary {
+            position: sticky;
+            top: 100px
+        }
+
+        .summary-box {
+            background: var(--card);
+            color: var(--primary);
+            border-radius: 10px;
+            padding: 16px;
+            border: 1px solid #e9f2ff;
+            box-shadow: 0 12px 30px rgba(2, 6, 23, 0.06)
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px
+        }
+
+        .price {
+            font-size: 26px;
+            margin: 12px 0;
+            font-weight: 800
+        }
+
+        .continue-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: var(--success);
+            color: white;
+            border-radius: 10px;
+            font-size: 15px;
+            cursor: pointer
+        }
+
+        .tabs-nav {
+            display: flex;
+            gap: 0;
+            background: var(--card);
+            border-bottom: 2px solid #e2e8f0;
+            padding: 0 18px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: sticky;
+            top: 67px;
+            z-index: 10
+        }
+
+        .tab-btn {
+            padding: 14px 24px;
+            border: none;
+            background: transparent;
+            color: #64748b;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all .2s;
+            white-space: nowrap
+        }
+
+        .tab-btn:hover {
+            color: var(--primary)
+        }
+
+        .tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent)
+        }
+
+        .screen-wrapper {
+            display: none
+        }
+
+        .screen-wrapper.active {
+            display: block
+        }
+
+        .payment-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 18px
+        }
+
+        .payment-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 8px 20px rgba(2, 6, 23, 0.04)
+        }
+
+        .timer {
+            background: #fff4f2;
+            color: #9b1c1c;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 12px
+        }
+
+        .booking-info {
+            border: 1px solid #eef6ff;
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 12px;
+            background: #fbfdff
+        }
+
+        .booking-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eef6ff
+        }
+
+        .payment-method {
+            border: 1px solid #e6f0ff;
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 10px;
+            background: #f8fbff
+        }
+
+        .pay-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            cursor: pointer
+        }
+
+        /* Responsive tweaks */
+        @media(max-width:1024px) {
+            .hero-banner {
+                height: 260px
+            }
+
+            .hero-overlay h2 {
+                font-size: 26px
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr
+            }
+
+            .booking-layout {
+                grid-template-columns: 1fr
+            }
+
+            .container {
+                padding: 0 14px;
+                margin: 18px auto
+            }
+
+            .summary {
+                position: relative;
+                top: auto;
+                margin-top: 24px
+            }
+        }
+
+        @media(max-width:768px) {
+            .hero-banner {
+                height: 200px
+            }
+
+            .hero-overlay h2 {
+                font-size: 22px
+            }
+
+            .card {
+                padding: 16px
+            }
+
+            h3 {
+                font-size: 16px;
+                margin-bottom: 16px
+            }
+
+            .form-grid.row-2 {
+                grid-template-columns: 1fr
+            }
+
+            .field label {
+                font-size: 12px
+            }
+
+            .field input,
+            .field select,
+            .field textarea {
+                font-size: 14px
+            }
+
+            .booking-layout {
+                gap: 16px
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div style="background:#dbeafe;color:#1e3a8a;padding:10px 20px;text-align:center;font-size:14px;font-weight:bold;">
+        Demo Assignment — PickleHub Court Booking Experience
+    </div>
+
+    <div class="header">
+        <h1>PickleHub</h1>
+
+        <div class="nav">
+            <button onclick="scrollToBooking()"
+                style="background:#16a34a;color:white;border:none;padding:12px 18px;border-radius:10px;font-weight:700;cursor:pointer;">
+                Đặt sân ngay
+            </button>
+        </div>
+    </div>
+
+    <div class="screen-wrapper active" id="tab-booking" style="display:block;">
+
+        <div class="container">
+
+            <div class="hero">
+
+                <div class="hero-banner">
+                    <div class="hero-overlay">
+                        <div>
+                            <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;">
+                                <span
+                                    style="background:#16a34a;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:bold;">Đang
+                                    hoạt động</span>
+                                <span
+                                    style="background:rgba(255,255,255,0.15);padding:8px 14px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px);">8
+                                    sân indoor</span>
+                                <span
+                                    style="background:rgba(255,255,255,0.15);padding:8px 14px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px);">Parking
+                                    miễn phí</span>
+                            </div>
+
+                            <h2>Sammy Pickleball Plus</h2>
+
+                            <p style="font-size:18px;opacity:0.95;max-width:700px;line-height:1.8;">
+                                Cụm sân pickleball indoor tiêu chuẩn thi đấu với hệ thống booking real-time,
+                                hỗ trợ giữ sân tự động và thanh toán online.
+                            </p>
+
+                            <div style="display:flex;gap:30px;margin-top:28px;flex-wrap:wrap;">
+
+                                <div>
+                                    <div style="font-size:13px;opacity:0.8;">Địa chỉ</div>
+                                    <strong>Long Biên, Hà Nội</strong>
+                                </div>
+
+                                <div>
+                                    <div style="font-size:13px;opacity:0.8;">Giờ hoạt động</div>
+                                    <strong>06:00 - 23:00</strong>
+                                </div>
+
+                                <div>
+                                    <div style="font-size:13px;opacity:0.8;">Giá từ</div>
+                                    <strong>180.000đ / giờ</strong>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                style="padding:20px 40px;background:#eff6ff;border-top:1px solid #dbeafe;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;">
+
+                <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                    <div
+                        style="background:white;padding:10px 16px;border-radius:999px;font-size:14px;border:1px solid #dbeafe;">
+                        ✔ Real-time Booking</div>
+                    <div
+                        style="background:white;padding:10px 16px;border-radius:999px;font-size:14px;border:1px solid #dbeafe;">
+                        ✔ Slot Lock 10 phút</div>
+                    <div
+                        style="background:white;padding:10px 16px;border-radius:999px;font-size:14px;border:1px solid #dbeafe;">
+                        ✔ Race Condition Handling</div>
+                </div>
+
+                <div style="font-size:14px;color:#475569;">
+                    Senior Product Owner Demo Prototype
+                </div>
+
+            </div>
+
+            <div class="booking-layout">
+
+                <div class="hero-content">
+
+                    <div>
+                        <h3>Cụm sân pickleball tiêu chuẩn thi đấu</h3>
+
+                        <p>
+                            Hệ thống sân indoor hiện đại, ánh sáng chuẩn thi đấu,
+                            hỗ trợ booking online theo thời gian thực.
+                        </p>
+
+                        <div
+                            style="margin-top:30px;padding:24px;border-radius:20px;background:#f8fafc;border:1px solid #e2e8f0;line-height:1.9;color:#334155;">
+                            PickleHub mang trải nghiệm đặt sân hiện đại tương tự các nền tảng booking chuyên nghiệp.
+                            Người dùng có thể kiểm tra trạng thái sân theo thời gian thực,
+                            giữ sân trong 10 phút trước thanh toán,
+                            và hỗ trợ xử lý conflict booking tự động.
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <div
+                            style="background:white;border-radius:24px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,0.06);">
+                            <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=1200&auto=format&fit=crop"
+                                style="width:100%; border-radius:18px; height:260px; object-fit:cover;" />
+
+                            <div style="margin-top:18px;display:grid;grid-template-columns:repeat(2,1fr);gap:14px;">
+
+                                <div style="background:#f8fafc;padding:16px;border-radius:14px;">
+                                    <div style="font-size:13px;color:#64748b;">Loại sân</div>
+                                    <strong>Indoor Premium</strong>
+                                </div>
+
+                                <div style="background:#f8fafc;padding:16px;border-radius:14px;">
+                                    <div style="font-size:13px;color:#64748b;">Mặt sân</div>
+                                    <strong>Pro Court Surface</strong>
+                                </div>
+
+                                <div style="background:#f8fafc;padding:16px;border-radius:14px;">
+                                    <div style="font-size:13px;color:#64748b;">Tiện ích</div>
+                                    <strong>Cafe + Locker</strong>
+                                </div>
+
+                                <div style="background:#f8fafc;padding:16px;border-radius:14px;">
+                                    <div style="font-size:13px;color:#64748b;">Thanh toán</div>
+                                    <strong>QR / Banking</strong>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div>
+
+                    <div class="card">
+
+                        <h3>Đặt Sân</h3>
+
+                        <div class="form-grid">
+
+                            <div class="field">
+                                <label>Tên người đặt(*)</label>
+                                <div style="position:relative;">
+                                    <span
+                                        style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;color:#59a9ea;">👤</span>
+                                    <input type="text" id="name" placeholder="Họ tên"
+                                        style="padding-left:48px; width:100%;" />
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label>Email(*)</label>
+                                <div style="position:relative;">
+                                    <span
+                                        style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;color:#59a9ea;">✉️</span>
+                                    <input type="email" id="email" placeholder="Email"
+                                        style="padding-left:48px; width:100%;" />
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label>Số điện thoại(*)</label>
+                                <div style="position:relative;">
+                                    <span
+                                        style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;color:#59a9ea;">📞</span>
+                                    <input type="text" id="phone" placeholder="Số điện thoại"
+                                        style="padding-left:48px; width:100%;" />
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div style = "display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                <label>Số lượng người(*): </label>
+                                <div
+                                    style="display:flex;border-radius:8px;overflow:hidden;border:1.5px solid #dbe3ea;max-width:120px;width:100%;height:30px;background:white;">
+                                    <button type="button" onclick="decreasePlayer()"
+                                        style="flex:0.4;border:none;background:#f8fafc;font-size:22px;color:#64748b;cursor:pointer;transition:background .2s;">-</button>
+                                    <div id="playerCount"
+                                        style="flex:1;background:#59a9ea;color:white;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold;">
+                                        1</div>
+                                    <button type="button" onclick="increasePlayer()"
+                                        style="flex:0.4;border:none;background:#f8fafc;font-size:22px;color:#64748b;cursor:pointer;transition:background .2s;">+</button>
+                                </div>
+                                <select id="players" style="display:none;">
+                                    <option>1 người</option>
+                                </select>
+                            </div>
+                            </div>
+                            <div style="margin-top:18px;">
+
+                                <div
+                                    style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+
+                                    <button onclick="toggleCourtMap()"
+                                        style="background:none;border:none;color:#2563eb;font-weight:700;font-size:14px;cursor:pointer;padding:0;">
+                                        Xem sơ đồ sân
+                                    </button>
+
+                                    <div style="display:flex;gap:14px;flex-wrap:wrap;">
+
+                                        <div
+                                            style="display:flex;align-items:center;gap:8px;font-size:14px;color:#475569;">
+                                            <span
+                                                style="width:12px;height:12px;border-radius:999px;background:#22c55e;display:inline-block;"></span>
+                                            Sân còn trống
+                                        </div>
+
+                                        <div
+                                            style="display:flex;align-items:center;gap:8px;font-size:14px;color:#475569;">
+                                            <span
+                                                style="width:12px;height:12px;border-radius:999px;background:#ef4444;display:inline-block;"></span>
+                                            Sân đã được đặt
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div id="courtMap"
+                                    style="display:none;margin-top:18px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:22px;padding:20px;">
+
+                                    <img src="../PickleBall_map.png"
+                                        style="width:100%;border-radius:18px;object-fit:cover;max-height:420px;" />
+
+                                    <div
+                                        style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px;">
+
+                                        <div
+                                            style="background:#dcfce7;border-radius:16px;padding:18px;text-align:center;font-weight:700;color:#166534;">
+                                            Sân 1<br /><span style="font-size:13px;font-weight:500;">Trống</span>
+                                        </div>
+
+                                        <div
+                                            style="background:#fee2e2;border-radius:16px;padding:18px;text-align:center;font-weight:700;color:#991b1b;">
+                                            Sân 2<br /><span style="font-size:13px;font-weight:500;">Đã đặt</span>
+                                        </div>
+
+                                        <div
+                                            style="background:#dcfce7;border-radius:16px;padding:18px;text-align:center;font-weight:700;color:#166534;">
+                                            Sân 3<br /><span style="font-size:13px;font-weight:500;">Trống</span>
+                                        </div>
+
+                                        <div
+                                            style="background:#fee2e2;border-radius:16px;padding:18px;text-align:center;font-weight:700;color:#991b1b;">
+                                            Sân 4<br /><span style="font-size:13px;font-weight:500;">Đã đặt</span>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="field">
+                                <label>Ngày đặt(*)</label>
+                                <div style="position:relative;">
+                                    <span
+                                        style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;color:#59a9ea;">📅</span>
+                                    <input type="date" id="date" style="padding-left:48px; width:100%;" />
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label>Chọn sân(*)</label>
+                                <select id="courtSelect" style="position:relative;">
+                                    <option value="">-- Chọn sân --</option>
+                                    <option value="san1">Sân 1</option>
+                                    <option value="san2">Sân 2</option>
+                                    <option value="san3">Sân 3</option>
+                                    <option value="san4">Sân 4</option>
+                                </select>
+                            </div>
+
+                            <div class="form-grid row-2">
+                                <div class="field">
+                                    <label>Bắt đầu(*)</label>
+                                    <input type="time" id="startTime" />
+                                </div>
+                                <div class="field">
+                                    <label>Kết thúc(*)</label>
+                                    <input type="time" id="endTime" />
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label>Giá tiền</label>
+                                <div style="position:relative;">
+                                    <span
+                                        style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;color:#59a9ea;">💰</span>
+                                    <input type="text" id="price" placeholder="0đ"
+                                        style="padding-left:48px; width:100%;" readonly />
+                                </div>
+                            </div>
+
+                            <button onclick="goToPayment()"
+                                style="width:100%;padding:12px;border:none;background:var(--success);color:white;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px;transition:background .2s;">Đặt
+                                sân ngay</button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    </div>
+
+    <div class="screen-wrapper" id="tab-payment" style="display:none;">
+
+        <div class="container screen2" id="screen2">
+
+            <div class="payment-layout">
+
+                <div class="payment-card">
+
+
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:25px;">
+                        <button onclick="backToBooking()"
+                            style="width:44px;height:44px;border:none;border-radius:12px;background:#e2e8f0;font-size:20px;cursor:pointer;">
+                            ←
+                        </button>
+                        <h2>Thanh Toán Booking</h2>
+                    </div>
+
+
+                    <div class="timer" id="timer">
+                        10:00
+                    </div>
+
+                    <div class="booking-info">
+
+                        <h4>Thông Tin Người Đặt</h4>
+
+                        <div class="booking-item">
+                            <span>Họ và tên</span>
+                            <strong id="confirmName">-</strong>
+                        </div>
+
+                        <div class="booking-item">
+                            <span>Email</span>
+                            <strong id="confirmEmail">-</strong>
+                        </div>
+
+                        <div class="booking-item">
+                            <span>Số điện thoại</span>
+                            <strong id="confirmPhone">-</strong>
+                        </div>
+
+                        <div class="booking-item">
+                            <span>Số lượng người</span>
+                            <strong id="confirmPlayers">-</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="booking-info">
+
+                        <h4>Thông Tin Booking</h4>
+
+                        <div class="booking-item">
+                            <span>Ngày chơi</span>
+                            <strong id="confirmDate">-</strong>
+                        </div>
+
+                        <div class="booking-item">
+                            <span>Khung giờ</span>
+                            <strong>19:00 - 21:00</strong>
+                        </div>
+
+                        <div class="booking-item">
+                            <span>Sân</span>
+                            <strong>Sân 1</strong>
+                        </div>
+
+                        <div class="booking-item">
+                            <span>Loại booking</span>
+                            <strong id="confirmType">-</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="payment-method">
+                        <strong>Phương thức thanh toán</strong>
+                        <p style="margin-top:10px; color:#475569;">
+                            QR Code • Banking • Momo • ZaloPay
+                        </p>
+                    </div>
+
+                    <button class="pay-btn">
+                        Thanh toán ngay — 360.000đ
+                    </button>
+
+                </div>
+
+
+                <div>
+
+                    <div class="summary-box" style="margin-top:28px;">
+
+                        <h3 style="color:white; margin-bottom:20px;">Reservation Locked</h3>
+
+                        <p style="line-height:1.8; opacity:0.95;">
+                            Slot đã được giữ trong 10 phút.
+                            <br /><br />
+                            Nếu quá thời gian thanh toán,
+                            booking sẽ tự động bị hủy
+                            và sân sẽ được trả về hệ thống.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    </div>
+    </div>
+
+    <script>
+
+        let currentPlayer = 1;
+
+
+        function scrollToBooking() {
+            window.scrollTo({
+                top: document.querySelector('.booking-layout').offsetTop - 80,
+                behavior: 'smooth'
+            });
+        }
+
+
+        function toggleCourtMap() {
+            const map = document.getElementById('courtMap');
+
+            if (map.style.display === 'none' || map.style.display === '') {
+                map.style.display = 'block';
+            } else {
+                map.style.display = 'none';
+            }
+        }
+
+        function backToBooking() {
+
+            document.getElementById('tab-booking').style.display = 'block';
+            document.getElementById('tab-payment').style.display = 'none';
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+
+        function increasePlayer() {
+            currentPlayer++;
+            document.getElementById('playerCount').innerText = currentPlayer;
+            document.getElementById('players').innerHTML = `<option>${currentPlayer} người</option>`;
+        }
+
+        function decreasePlayer() {
+            if (currentPlayer > 1) {
+                currentPlayer--;
+                document.getElementById('playerCount').innerText = currentPlayer;
+                document.getElementById('players').innerHTML = `<option>${currentPlayer} người</option>`;
+            }
+        }
+
+
+
+        function goToPayment() {
+
+            document.getElementById('confirmName').innerText = document.getElementById('name').value || '-';
+            document.getElementById('confirmEmail').innerText = document.getElementById('email').value || '-';
+            document.getElementById('confirmPhone').innerText = document.getElementById('phone').value || '-';
+            document.getElementById('confirmPlayers').innerText = currentPlayer + ' người';
+            document.getElementById('confirmDate').innerText = document.getElementById('date').value || '-';
+            document.getElementById('confirmType').innerText = document.getElementById('courtSelect').value || '-';
+
+            document.getElementById('tab-booking').style.display = 'none';
+            document.getElementById('tab-payment').style.display = 'block';
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+            startTimer();
+        }
+
+
+        function startTimer() {
+
+            let duration = 600;
+
+            const timer = setInterval(function () {
+
+                let minutes = Math.floor(duration / 60);
+                let seconds = duration % 60;
+
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                document.getElementById('timer').innerText = minutes + ':' + seconds;
+
+                duration--;
+
+                if (duration < 0) {
+                    clearInterval(timer);
+                    document.getElementById('timer').innerText = 'Hết thời gian giữ chỗ';
+                }
+
+            }, 1000);
+
+        }
+
+    </script>
+
+    <div id="courtModal"
+        style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;align-items:center;justify-content:center;">
+
+        <div style="background:white;width:700px;border-radius:24px;padding:30px;position:relative;">
+
+            <button onclick="closeMap()"
+                style="position:absolute;top:20px;right:20px;border:none;background:#ef4444;color:white;width:36px;height:36px;border-radius:50%;cursor:pointer;">
+                ✕
+            </button>
+
+            <h2 style="margin-bottom:20px;">Sơ Đồ Cụm Sân</h2>
+
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;">
+
+                <div style="background:#dcfce7;padding:40px;border-radius:18px;text-align:center;font-weight:bold;">
+                    Sân 1
+                    <br /><br />
+                    Available
+                </div>
+
+                <div style="background:#dcfce7;padding:40px;border-radius:18px;text-align:center;font-weight:bold;">
+                    Sân 2
+                    <br /><br />
+                    Available
+                </div>
+
+                <div style="background:#fef3c7;padding:40px;border-radius:18px;text-align:center;font-weight:bold;">
+                    Sân 3
+                    <br /><br />
+                    Reserved
+                </div>
+
+                <div style="background:#dcfce7;padding:40px;border-radius:18px;text-align:center;font-weight:bold;">
+                    Sân 4
+                    <br /><br />
+                    Available
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        function openMap() {
+            document.getElementById('courtModal').style.display = 'flex';
+        }
+
+        function closeMap() {
+            document.getElementById('courtModal').style.display = 'none';
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>ZBS Trusted Assets</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Inter, Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #0f172a;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 30px;
+            margin-bottom: 16px;
+        }
+
+        h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #475569;
+            line-height: 1.7;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 36px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        /* ========================= */
+        /* TEMPLATE BUILDER */
+        /* ========================= */
+
+        .prototype {
+            background: #ffffff;
+            border: 1px solid #dbeafe;
+            border-radius: 18px;
+            padding: 24px;
+            margin-top: 30px;
+        }
+
+        .template-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .panel {
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 24px;
+            background: #f8fafc;
+        }
+
+        .preview {
+            border: 1px solid #dbeafe;
+            border-radius: 18px;
+            padding: 24px;
+            background: white;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .input-box {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .asset-selector {
+            position: relative;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 18px;
+            padding-top: 34px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .asset-link {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            font-size: 12px;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .asset-link:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .approved {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .highlight {
+            background: #eff6ff;
+            border-left: 6px solid #2563eb;
+            padding: 22px;
+            border-radius: 14px;
+            margin-top: 30px;
+        }
+
+        .warning {
+            background: #fff7ed;
+            border-left: 6px solid #ea580c;
+            padding: 22px;
+            border-radius: 14px;
+        }
+
+        /* Diagrams for workflow */
+        .diagram-grid{display:flex;flex-direction:column;gap:18px;margin-top:18px}
+        .diagram-card{background:#fff;border:1px solid #e6eefb;padding:12px;border-radius:12px;display:flex;flex-direction:column;align-items:center;width:100%}
+        .diagram-card img{max-width:100%;height:auto;border-radius:8px}
+        .diagram-caption{margin-top:8px;color:#64748b;font-size:13px}
+
+        .phone-preview {
+            margin-top: 20px;
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 24px;
+            border: 1px solid #dbeafe;
+        }
+
+        .message-box {
+            background: white;
+            padding: 18px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .cta {
+            background: #2563eb;
+            color: white;
+            padding: 14px;
+            text-align: center;
+            border-radius: 12px;
+            margin-top: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        @media(max-width:1024px) {
+
+            .template-builder {
+                grid-template-columns: 1fr;
+            }
+
+        }
+        /* Consolidated global styles are defined earlier; duplicate block removed to avoid conflicts */
+
+        .card {
+            background: white;
+            padding: 36px;
+            border-radius: 22px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
+        }
+
+        .highlight {
+            background: #eff6ff;
+            border-left: 6px solid #2563eb;
+            padding: 22px;
+            border-radius: 14px;
+            margin-top: 20px;
+        }
+
+        .warning {
+            background: #fff7ed;
+            border-left: 6px solid #ea580c;
+            padding: 22px;
+            border-radius: 14px;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 24px;
+        }
+
+        table th {
+            background: #0f172a;
+            color: white;
+            padding: 16px;
+            text-align: left;
+        }
+
+        table td {
+            padding: 16px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+
+        .flow {
+            background: #0f172a;
+            color: #93c5fd;
+            border-radius: 16px;
+            padding: 28px;
+            margin-top: 20px;
+            font-family: monospace;
+            line-height: 2;
+            overflow: auto;
+        }
+
+        .portal {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #dbeafe;
+            margin-top: 30px;
+        }
+
+        .sidebar {
+            background: #0f172a;
+            color: white;
+            padding: 30px;
+        }
+
+        .sidebar h4 {
+            margin-bottom: 24px;
+            font-size: 22px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 18px;
+            opacity: 0.9;
+        }
+
+        .content {
+            background: white;
+            padding: 32px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .button {
+            background: #2563eb;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .asset-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .asset-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px;
+            background: #f8fafc;
+        }
+
+        .asset-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .badge {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .approved {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .prototype {
+            background: #ffffff;
+            border: 1px solid #dbeafe;
+            border-radius: 18px;
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        .template-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .panel {
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px;
+            background: #f8fafc;
+        }
+
+        .preview {
+            border: 1px solid #dbeafe;
+            border-radius: 18px;
+            padding: 20px;
+            background: white;
+        }
+
+        .preview img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .cta {
+            background: #2563eb;
+            color: white;
+            padding: 12px;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 16px;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>ZBS Trusted Assets</h1>
+
+        <p class="subtitle">
+            Nền tảng Trusted Assets cho Zalo Business Solution
+            <br />
+            Senior Technical Product Owner Assignment — Design by Quoc Duy Nguyen
+        </p>
+
+        <div class="card">
+
+            <h2>1. Vấn đề hiện tại</h2>
+
+            <div class="flow">
+                <pre>
+Current State
+
+Template
+ ├── body_text
+ ├── image_url
+ ├── logo
+ └── CTA
+
+Approval Unit = Entire Template
+        </pre>
+            </div>
+
+            <p style="margin-top:20px;">
+                Hiện tại, chỉ cần thay đổi nhỏ ở logo hoặc CTA
+                cũng sẽ yêu cầu:
+            </p>
+
+            <ul style="margin-left:20px;">
+                <li>submit lại toàn bộ template</li>
+                <li>review moderation lại toàn bộ</li>
+                <li>chờ approve lại từ đầu</li>
+            </ul>
+
+            <div class="warning">
+                Điều này làm chậm tốc độ triển khai campaign,
+                tăng workload moderation,
+                và hạn chế khả năng scale của merchant.
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h2>2. Product Vision</h2>
+
+            <div class="highlight">
+
+                Trusted Assets biến các component reusable
+                thành những asset được quản lý và approve độc lập.
+
+                <br /><br />
+
+                Thay vì review lặp lại cùng một logo,
+                image hoặc CTA,
+                ZBS chỉ cần review asset một lần
+                và cho phép merchant tái sử dụng trên nhiều template.
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h2>3. Kiến trúc</h2>
+
+            <div class="flow">
+                <pre>
+Future State
+
+Template
+ ├── body_text
+ ├── logo_asset_id
+ ├── image_asset_id
+ └── cta_asset_id
+
+Approval Unit = Individual Asset
+</pre>
+            </div>
+
+            <table>
+
+                <tr>
+                    <th>Hệ thống hiện tại</th>
+                    <th>Trusted Assets System</th>
+                </tr>
+
+                <tr>
+                    <td>Asset viết inline</td>
+                    <td>Reusable asset library</td>
+                </tr>
+
+                <tr>
+                    <td>Moderation theo template</td>
+                    <td>Moderation theo asset</td>
+                </tr>
+
+                <tr>
+                    <td>Review lặp lại nhiều lần</td>
+                    <td>Approve một lần, reuse nhiều lần</td>
+                </tr>
+
+                <tr>
+                    <td>Campaign triển khai chậm</td>
+                    <td>Tăng tốc go-to-market</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+        <div class="card">
+            <h2>4. Workflow kiểm duyệt mới</h2>
+            <div class="diagram-grid">
+                <p> workflow approve một asset</p>
+                <div class="diagram-card">
+                    <img src="Diagram1.png" alt="Diagram 1 - Quy trình kiểm duyệt asset" />
+                    <div class="diagram-caption">Hình 1 — Quy trình kiểm duyệt asset</div>
+                </div>
+                <p> workflow approve template</p>
+                <div class="diagram-card">
+                    <img src="Diagram2.png" alt="Diagram 2 - Workflow approve template" />
+                    <div class="diagram-caption">Hình 2 — Workflow approve template</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+
+            <h2>5. Business Portal — Trusted Assets Library</h2>
+
+            <div class="portal">
+
+                <div class="sidebar">
+
+                    <h4>ZBS Portal</h4>
+
+                    <ul>
+                        <li>Dashboard</li>
+                        <li>Templates</li>
+                        <li>Campaigns</li>
+                        <li><strong>Trusted Assets</strong></li>
+                        <li>Moderation</li>
+                        <li>Analytics</li>
+                        <li>Billing</li>
+                    </ul>
+
+                </div>
+
+                <div class="content">
+
+                    <div class="topbar">
+                        <h3>Trusted Asset Library</h3>
+                        <div class="button">+ Upload Asset</div>
+                    </div>
+
+                    <div class="asset-grid">
+
+                        <div class="asset-card">
+                            <div class="asset-title">Brand Logo</div>
+                            <p>logo_v3.png</p>
+                            <p>Được sử dụng trong 42 templates</p>
+                            <span class="badge approved">Approved</span>
+                        </div>
+
+                        <div class="asset-card">
+                            <div class="asset-title">Delivery CTA</div>
+                            <p>Track Order</p>
+                            <p>Được sử dụng trong 18 templates</p>
+                            <span class="badge approved">Approved</span>
+                        </div>
+
+                        <div class="asset-card">
+                            <div class="asset-title">Summer Banner</div>
+                            <p>campaign_banner_v2</p>
+                            <p>Đang chờ moderation</p>
+                            <span class="badge pending">Pending Review</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h2>6. Prototype Template Builder</h2>
+            <div class="container">
+
+                    <div class="prototype">
+
+                        <div class="template-builder">
+
+                            <!-- LEFT PANEL -->
+                            <div class="panel">
+
+                                <h3>
+                                    Template Configuration
+                                </h3>
+
+                                <!-- TEMPLATE NAME -->
+                                <div style="margin-top:24px;">
+
+                                    <label>
+                                        Template Name
+                                    </label>
+
+                                    <div class="input-box">
+                                        order_delivery_update
+                                    </div>
+
+                                </div>
+
+                                <!-- BODY TEXT -->
+                                <div style="margin-top:24px;">
+
+                                    <label>
+                                        Body Text
+                                    </label>
+
+                                    <div class="input-box" style="min-height:120px;">
+                                        Đơn hàng #12345 của bạn đang được giao.
+                                        Dự kiến giao trong hôm nay.
+                                    </div>
+
+                                </div>
+
+                                <!-- TRUSTED LOGO ASSET -->
+                                <div style="margin-top:24px;">
+
+                                    <label>
+                                        Trusted Logo Asset
+                                    </label>
+
+                                    <div class="asset-selector">
+
+                                        <a class="asset-link">
+                                            Browse Library
+                                        </a>
+
+                                        <div>
+                                            logo_asset_id = logo_123
+                                            <br />
+                                            <span style="font-size:13px;color:#64748b;">
+                                                Used in 42 templates
+                                            </span>
+                                        </div>
+
+                                        <div class="badge approved">
+                                            Approved
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- TRUSTED BANNER ASSET -->
+                                <div style="margin-top:24px;">
+
+                                    <label>
+                                        Trusted Banner Asset
+                                    </label>
+
+                                    <div class="asset-selector">
+
+                                        <a class="asset-link">
+                                            Browse Library
+                                        </a>
+
+                                        <div>
+                                            image_asset_id = img_456
+                                            <br />
+                                            <span style="font-size:13px;color:#64748b;">
+                                                Used in 42 templates
+                                            </span>
+                                        </div>
+
+                                        <div class="badge approved">
+                                            Approved
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- CTA ASSET -->
+                                <div style="margin-top:24px;">
+
+                                    <label>
+                                        CTA Asset
+                                    </label>
+
+                                    <div class="asset-selector">
+
+                                        <a class="asset-link">
+                                            Browse Library
+                                        </a>
+
+                                        <div>
+                                            cta_asset_id = cta_789
+                                            <br />
+                                            <span style="font-size:13px;color:#64748b;">
+                                                Used in 42 templates
+                                            </span>
+                                        </div>
+
+                                        <div class="badge approved">
+                                            Approved
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+                            <!-- RIGHT PANEL -->
+                            <div class="preview">
+
+                                <h3>
+                                    Live Message Preview
+                                </h3>
+
+                                <div class="phone-preview">
+
+                                    <!-- HEADER -->
+                                    <div style="
+              display:flex;
+              align-items:center;
+              margin-bottom:18px;
+            ">
+
+                                        <div style="
+                width:48px;
+                height:48px;
+                border-radius:50%;
+                background:#2563eb;
+                margin-right:12px;
+              ">
+                                        </div>
+
+                                        <div>
+                                            <strong>ABC Shop Official Account</strong>
+                                            <br />
+                                            <span style="font-size:13px;color:#64748b;">
+                                                Zalo Business Message
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- IMAGE -->
+                                    <img src="https://dummyimage.com/600x260/dbeafe/1e3a8a&text=Trusted+Banner" style="
+                width:100%;
+                border-radius:16px;
+                margin-bottom:18px;
+              " />
+
+                                    <!-- MESSAGE -->
+                                    <div class="message-box">
+
+                                        Đơn hàng #12345 của bạn đang được giao.
+                                        Dự kiến giao trong hôm nay.
+
+                                    </div>
+
+                                    <!-- CTA -->
+                                    <div class="cta">
+                                        Theo dõi đơn hàng
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                
+
+            </div>
+            <!---<div class="prototype">
+
+                <div class="template-builder">
+
+                    <div class="panel">
+
+                        <h3>Create Template</h3>
+
+                        <p><strong>Body Text</strong></p>
+
+                        <div
+                            style="padding:16px;background:white;border-radius:12px;border:1px solid #e2e8f0;margin-bottom:20px;">
+                            Your order #12345 is now being delivered.
+                        </div>
+
+                        <p><strong>Select Trusted Logo</strong></p>
+
+                        <div
+                            style="padding:14px;background:white;border-radius:12px;border:1px solid #e2e8f0;margin-bottom:20px;">
+                            logo_asset_id = logo_123
+                        </div>
+
+                        <p><strong>Select Trusted Image</strong></p>
+
+                        <div
+                            style="padding:14px;background:white;border-radius:12px;border:1px solid #e2e8f0;margin-bottom:20px;">
+                            image_asset_id = img_456
+                        </div>
+
+                        <p><strong>Select CTA</strong></p>
+
+                        <div style="padding:14px;background:white;border-radius:12px;border:1px solid #e2e8f0;">
+                            cta_asset_id = cta_789
+                        </div>
+
+                    </div>
+
+                    <div class="preview">
+
+                        <h3>Live Preview</h3>
+
+                        <img src="https://dummyimage.com/500x250/dbeafe/1e3a8a&text=Trusted+Banner" />
+
+                        <p>
+                            Your order #12345 is now being delivered.
+                        </p>
+
+                        <div class="cta">
+                            Track Order
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        -->
+        </div>
+
+        <div class="card">
+
+            <h2>7. API Evolution</h2>
+
+            <h3>API hiện tại</h3>
+
+            <div class="flow">
+                <pre>
+                {
+                "name": "order_update",
+                "body_text": "...",
+                "image_url": "...",
+                "cta_buttons": []
+                }
+                </pre>
+            </div>
+
+            <h3>API tương lai</h3>
+
+            <div class="flow">
+                <pre>
+                {
+                "name": "order_update",
+                "body_text": "...",
+                "logo_asset_id": "logo_123",
+                "image_asset_id": "img_456",
+                "cta_asset_id": "cta_789"
+                }
+                </pre>
+            </div>
+            <p> Thêm những API mới </p>
+            <table>
+
+                <tr>
+                    <th>API bị ảnh hưởng</th>
+                    <th>Mục đích</th>
+                </tr>
+                <tr>
+                    <td>Xem danh sách Asset (new)</td>
+                    <td>Hiện thị danh sách asset</td>
+                </tr>
+                <tr>
+                    <td>Xem chi tiết 1 Asset (new)</td>
+                    <td>Hiển thị chi tiết asset</td>
+                </tr>
+                <tr>
+                    <td>Lấy thông tin asset (new)</td>
+                    <td>lấy thông tin của asset theo status</td>
+                </tr>
+                <tr>
+                    <td>Lấy thông tin asset đã approved (new)</td>
+                    <td>lấy thông tin của asset đã được approved theo category</td>
+                </tr>
+                <tr>
+                    <td>Tạo Asset (new)</td>
+                    <td>Tạo một dữ liệu asset mới</td>
+                </tr>
+                <tr>
+                    <td>Tạo Asset với version mới (new)</td>
+                    <td>Tạo một asset với version mới trên asset cũ</td>
+                </tr>
+                <tr>
+                    <td>Xoá Asset (new)</td>
+                    <td>Xoá một dữ liệu asset theo version</td>
+                </tr>
+                <tr>
+                    <td>Xoá toàn bộ Asset (new)</td>
+                    <td>Xoá tất cả các version của một asset</td>
+                </tr>
+                <tr>
+                    <td>Cập nhật Asset (new)</td>
+                    <td>cập nhật nội dung bên trong của 1 asset</td>
+                </tr>
+                
+                <tr>
+                    <td>Cập nhật Asset status (new)</td>
+                    <td>Cập nhật trạng thái của một asset</td>
+                </tr>
+                <tr>
+                    <td>Ghi mới lịch sử chỉnh sửa Asset (new)</td>
+                    <td>ghi thông tin lịch sử chỉnh sửa của một asset</td>
+                </tr>
+                
+                <tr>
+                    <td>hiển thị danh sách template bị ảnh hưởng bởi 1 asset (new)</td>
+                    <td>hiển thị các template sử dụng một asset cụ thể</td>
+                </tr>
+                <tr>
+                    <td>cập nhật template bị ảnh hưởng bởi 1 asset (new)</td>
+                    <td>cập nhật các template sử dụng một asset cụ thể</td>
+                </tr>
+                <tr>
+                    <td>lấy danh sách template (used)</td>
+                    <td>lấy danh sách các template đã được sử dụng</td>
+                </tr>
+                <tr>
+                    <td>xem chi tiết 1 template (used)</td>
+                    <td>xem chi tiết thông tin của một template đã được sử dụng</td>
+                </tr>
+                <tr>
+                    <td>tạo template mới (used)</td>
+                    <td>tạo một template mới từ các asset</td>
+                </tr>
+                <tr>
+                    <td>tính toán giá tiền của 1 template (used)</td>
+                    <td>tính toán chi phí cho một template dựa trên các asset được sử dụng</td>
+                </tr>
+                <tr>
+                    <td>xoá template (used)</td>
+                    <td>xoá một template theo version</td>
+                </tr>
+                <tr>
+                    <td>cập nhật trạng thái của 1 template (used)</td>
+                    <td>cập nhật trạng thái của một template</td>
+                </tr>
+                <tr>
+                    <td>Gửi thông báo (used)</td>
+                    <td>gửi thông báo khi có sự kiện xảy ra (asset approve/ reject)</td>
+                </tr>
+            </table>
+
+        </div>
+
+        
+
+        <div class="card">
+
+            <h2>8. Governance & Risk Control</h2>
+
+            <table>
+
+                <tr>
+                    <th>Loại Asset</th>
+                    <th>Logic Validation</th>
+                </tr>
+
+                <tr>
+                    <td>Logo</td>
+                    <td>Xác minh ownership thương hiệu</td>
+                </tr>
+
+                <tr>
+                    <td>Image</td>
+                    <td>Moderation nội dung & policy check</td>
+                </tr>
+
+                <tr>
+                    <td>CTA</td>
+                    <td>Kiểm tra phishing & URL độc hại</td>
+                </tr>
+
+            </table>
+
+            <h3>Merchant Trust Tier</h3>
+
+            <table>
+
+                <tr>
+                    <th>Merchant Tier</th>
+                    <th>Chính sách Moderation</th>
+                </tr>
+
+                <tr>
+                    <td>High Trust</td>
+                    <td>Fast-track approval</td>
+                </tr>
+
+                <tr>
+                    <td>Medium Trust</td>
+                    <td>Moderation tiêu chuẩn</td>
+                </tr>
+
+                <tr>
+                    <td>Low Trust</td>
+                    <td>Review nghiêm ngặt</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+        <div class="card">
+
+            <h2>9. Final Recommendation</h2>
+
+            <div class="highlight">
+
+                Trusted Assets không nên được xem
+                là một reusable image feature đơn giản.
+
+                <br /><br />
+
+                Đây nên là nền tảng infrastructure
+                dành cho communication assets,
+                giúp cân bằng giữa:
+
+                <br /><br />
+
+                merchant flexibility,
+                moderation scalability,
+                platform trust,
+                và ecosystem quality.
+
+            </div>
+
+        </div>
+
+        <div class="footer">
+            Zalo Business Solution — Trusted Assets
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercise 1 - Multi-Message Bundle</title>
+    <style>
+        :root {
+            --bg: #fbfdff;
+            --panel: #ffffff;
+            --text: #111318;
+            --muted: #6b7280;
+            --accent: #0b63d6;
+            --card: #ffffff;
+            --glass: rgba(11, 99, 214, 0.06);
+            --border: #e6e9ee;
+            --shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            margin: 0;
+            background: linear-gradient(180deg, var(--bg), #ffffff);
+            color: var(--text);
+            font-size: 16px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+            gap: 28px;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 300px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            padding: 20px;
+            box-sizing: border-box;
+            background: var(--panel);
+            position: sticky;
+            top: 20px;
+            align-self: flex-start;
+            max-height: calc(100vh - 48px);
+            overflow: auto;
+            box-shadow: var(--shadow);
+        }
+
+        .brand {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .nav-tree {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0
+        }
+
+        .nav-tree li {
+            margin: 6px 0
+        }
+
+        .nav-tree a {
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 10px;
+            border-radius: 8px;
+            transition: background .12s ease, color .12s ease, transform .08s ease;
+            font-size: 15px;
+        }
+
+        .nav-tree a:hover {
+            background: var(--glass);
+            transform: translateX(2px)
+        }
+
+        .nav-tree a:active {
+            transform: none
+        }
+
+        .nav-tree a.active {
+            background: linear-gradient(90deg, var(--glass), rgba(255, 255, 255, 0.4));
+            color: var(--accent);
+            font-weight: 700
+        }
+
+        .sub {
+            margin-left: 12px;
+            font-size: 14px;
+            color: var(--muted)
+        }
+
+        .toggle {
+            cursor: pointer;
+            color: var(--accent);
+            font-size: 13px
+        }
+
+        .highlight {
+            background: #f8f9ff;
+            border-left: 5px solid var(--accent);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px
+        }
+
+        /* Main */
+        .main {
+            flex: 1;
+            max-width: 1100px;
+            margin: 0 auto
+        }
+
+        .main .container {
+            padding: 18px;
+            background: transparent
+        }
+
+        h1 {
+            font-size: 34px;
+            margin: 0 0 6px
+        }
+
+        header .meta {
+            color: var(--muted);
+            margin-bottom: 20px
+        }
+
+        section {
+            margin-top: 36px
+        }
+
+        h2 {
+            font-size: 20px;
+            margin: 18px 0;
+            padding-left: 12px;
+            border-left: 4px solid #111
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 12px;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.02)
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 12px;
+            border-radius: 8px;
+            overflow: hidden
+        }
+
+        table th,
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            text-align: left
+        }
+
+        table th {
+            background: #fbfdff;
+            color: var(--muted);
+            font-weight: 600
+        }
+
+        table tr:nth-child(even) {
+            background: #fafbff
+        }
+
+        pre,
+        code {
+            background: #f7f8fb;
+            padding: 10px;
+            border-radius: 8px;
+            overflow: auto;
+            border: 1px solid var(--border)
+        }
+
+        /* Small helpers */
+        .muted {
+            color: var(--muted)
+        }
+
+        .small {
+            font-size: 13px
+        }
+
+        /* Responsive */
+        @media (max-width:1000px) {
+            .app {
+                flex-direction: column;
+                padding: 16px
+            }
+
+            .sidebar {
+                width: 100%;
+                position: relative;
+                max-height: none
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.toggle').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var target = document.getElementById(btn.dataset.target);
+                    if (!target) return;
+                    target.style.display = target.style.display === 'none' ? 'block' : 'none';
+                });
+            });
+            // simple anchor highlighting
+            var links = document.querySelectorAll('.nav-tree a');
+            links.forEach(function (a) { a.addEventListener('click', function () { links.forEach(l => l.style.fontWeight = ''); a.style.fontWeight = '700' }) });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="app">
+        <aside class="sidebar" aria-label="Primary navigation">
+            <div class="brand">Multi-Message Bundle</div>
+            <ul class="nav-tree">
+                <li>
+                    <a href="#overview">Giới thiệu <span class="toggle" data-target="IntroSub">▾</span></a>
+                    <div id="IntroSub" style="display:block" class="sub">
+                        <div><a href="#overview">Bài toán hiện tại</a></div>
+                        <div><a href="#industrysituation">Bối cảnh ngành</a></div>
+                        <div><a href="#goals">Mục tiêu</a></div>
+                    </div>
+                </li>
+                <li>
+                    <a href="#bundle">Định nghĩa Bundle <span class="toggle" data-target="bundleSub">▾</span></a>
+                    <div id="bundleSub" style="display:block" class="sub">
+                        <div><a href="#bundle">Định nghĩa Bundle</a></div>
+                        <div><a href="#bundlelifecycle">Lifecycle của Bundle</a></div>
+                        <div><a href="#bundledesign">Thiết kế Bundle</a></div>
+                    </div>
+                </li>
+                <li><a href="#charging">Pricing & Billing Logic</a>
+                    <div id="chargingSub" style="display:block" class="sub">
+                        <div><a href="#charging">Pricing</a></div>
+                        <div><a href="#deliveryrule">2-hour delivery rule</a></div>
+                </li>
+                <li><a href="#abuse">Cơ chế chống lạm dụng</a></li>
+                <li><a href="#metrics">Metric, rollout strategy</a></li>
+            </ul>
+
+        </aside>
+
+        <main class="main">
+            <header>
+                <h1>Multi-Message Bundle</h1>
+                <div class="meta">Senior Technical Product Owner Assignment — Design by Quoc Duy Nguyen</div>
+            </header>
+
+            <section id="overview">
+                <div class="card">
+                    <strong>Ý tưởng cốt lõi:</strong><br><br>
+
+                    Xây dựng cơ chế bundle theo workflow, trong đó các tin nhắn liên quan đến cùng quy trình nghiệp
+                    vụ sẽ được nhóm lại và tính phí theo bundle thay vì tính riêng từng tin nhắn.
+                    <br><br>
+
+                    Thiết kế này hướng tới việc khuyến khích các workflow chăm sóc khách hàng có cấu trúc rõ ràng thay
+                    vì chỉ tối ưu theo số lượng tin nhắn gửi ra.
+                </div>
+
+                <h2>1. Bài toán hiện tại</h2>
+                <p>
+                    Hiện tại pricing của ZBS được thiết kế xoay quanh việc gửi từng message độc lập.
+                </p>
+
+                <p>
+                    Tuy nhiên trong thực tế, hoạt động vận hành của doanh nghiệp không diễn ra theo cách đó.
+                </p>
+
+                <table>
+                    <tr>
+                        <th>Thực tế doanh nghiệp</th>
+                        <th>Ví dụ</th>
+                    </tr>
+
+                    <tr>
+                        <td>Quy trình tạo đơn hàng</td>
+                        <td>Xác nhận đơn → Thanh toán thành công → Đang chuẩn bị hàng/Đóng gói hàng hoá → Đã giao cho
+                            đơn vị vận chuyển →
+                            Đang giao hàng → Thông báo đơn hàng sắp đến (optional) → Hoàn tất giao hàng → chăm sóc sau
+                            mua</td>
+                    </tr>
+
+                    <tr>
+                        <td>Quy trình hoàn trả đơn hàng</td>
+                        <td>Yêu cầu hoàn trả → xét duyệt yêu cầu (approval) → Chuẩn bị gửi trả →
+                            Lấy hàng thành công → Vận chuyển về nhà phân phối → kiểm tra hàng trả → Xác nhận hoàn tiền →
+                            Hoàn tất hoàn tiền </td>
+                    </tr>
+                </table>
+                <p>
+                    Điều này dẫn đến 3 hạn chế lớn:
+                </p>
+
+                <ol>
+                    <li>Workflow vận hành trở nên tốn kém ở quy mô lớn</li>
+                    <li>Doanh nghiệp có xu hướng giảm số lượng cập nhật gửi tới khách hàng</li>
+                </ol>
+
+                <p>
+                    Cơ hội ở đây là xây dựng mô hình định giá theo workflow trong khi vẫn giữ được:
+                </p>
+
+                <ul>
+                    <li>độ tin cậy của delivery</li>
+                    <li>chất lượng </li>
+                    <li>khả năng chống spam</li>
+                </ul>
+                <div class="highlight">
+                    Doanh nghiệp không suy nghĩ theo từng message.
+                    Họ suy nghĩ theo workflow.
+                </div>
+            </section>
+
+            <section id="industrysituation">
+                <h2>2. Bối cảnh ngành & Benchmark đối thủ</h2>
+                <p>
+                    Để thiết kế Multi-Message Bundle cho ZBS,
+                    cần nhìn vào cách các platform business messaging lớn trên thế giới đã evolve.
+                </p>
+                <p>
+                    Các platform lớn đã phát triển theo hướng này như sau:
+                </p>
+                <table>
+                    <tr>
+                        <th>Platform</th>
+                        <th>Họ đang làm gì?</th>
+                        <th>Insights</th>
+                    </tr>
+
+                    <tr>
+                        <td>WhatsApp Business</td>
+                        <td>
+                            Không còn xem message là đơn vị tính phí chính, mà xem toàn bộ customer conversation là một
+                            business interaction.
+                        </td>
+                        <td>
+                            Không vận hành theo từng message riêng lẻ.
+                            Họ vận hành theo customer conversation và customer journey.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Twilio</td>
+                        <td>
+                            Xây communication infrastructure & workflow orchestration
+                        </td>
+                        <td>
+                            Messaging platform cần hiểu business workflow và delivery lifecycle để cung cấp giá trị vượt
+                            trội thay vì chỉ là một message relay.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>WeChat OA</td>
+                        <td>
+                            Tích hợp messaging trực tiếp vào hệ sinh thái business
+                        </td>
+                        <td>
+                            Messaging platform có thể evolve thành business infrastructure
+                        </td>
+                    </tr>
+                </table>
+                <p> Các platform như WhatsApp, Twilio, và WeChat
+                    đã chứng minh rằng: tương lai của business messaging không còn nằm ở việc
+                    “gửi được nhiều tin nhắn hơn”, mà nằm ở khả năng: đồng hành cùng toàn bộ customer workflow của doanh
+                    nghiệp.
+                </p>
+                <div class="highlight">
+                    Khi các đối thủ lớn đã validate thành công hướng đi này trên quy mô toàn cầu, đây là cơ hội để ZBS
+                    học hỏi mô hình đã thành công, sau đó localize phù hợp với hành vi người dùng và hệ sinh thái doanh
+                    nghiệp tại Việt Nam.
+                </div>
+            </section>
+            <section id="goals">
+                <h2>3. Mục tiêu & Phạm vi không xử lý</h2>
+                <ul>
+                    <li>Giảm chi phí hiệu quả cho các workflow nghiệp vụ có cấu trúc</li>
+                    <li>Tương thích với kiến trúc Send API hiện tại</li>
+                    <li>Hỗ trợ billing bất đồng bộ dựa trên delivery thực tế</li>
+                    <li>Ngăn chặn lạm dụng và spam</li>
+                    <li>Tạo nền tảng cho analytics theo workflow trong tương lai</li>
+                </ul>
+
+                <h3>Không nằm trong phạm vi</h3>
+
+                <ul>
+                    <li>Không thay thế pricing standalone hiện tại</li>
+                    <li>Không xây dựng gói gửi tin không giới hạn</li>
+                    <li>Không hỗ trợ bundle cho các chiến dịch marketing tùy ý</li>
+                    <li>Không redesign toàn bộ flow duyệt template</li>
+                </ul>
+                <div class="highlight">
+                    Mục tiêu cuối cùng là tạo ra một hệ sinh thái business messaging bền vững, nơi doanh nghiệp được
+                    khuyến khích xây dựng các workflow chăm sóc khách hàng chất lượng cao, đồng thời vẫn đảm bảo được độ
+                    tin cậy và khả năng chống spam của nền tảng.
+                </div>
+                <section id="bundle">
+                    <h2>4. Định nghĩa Bundle</h2>
+                    <h2>4.1. Bundle là gì?</h2>
+                    Bundle đại diện cho một workflow nghiệp vụ giữa doanh nghiệp và khách hàng.
+                    </p>
+
+                    <p>
+                        Thay vì tính phí từng message riêng lẻ, hệ thống sẽ nhận diện các message thuộc cùng workflow và
+                        áp
+                        dụng logic bundle pricing.
+                    </p>
+
+                    <h3>Ví dụ Bundle</h3>
+
+                    <table>
+                        <tr>
+                            <th>Loại Workflow</th>
+                            <th>Các bước tin nhắn</th>
+                        </tr>
+
+                        <tr>
+                            <td>Workflow đặt hàng</td>
+                            <td>Xác nhận đơn → Thanh toán thành công → Đang chuẩn bị hàng/Đóng gói hàng hoá → Đã giao
+                                cho đơn vị vận chuyển → Đang giao hàng → Thông báo đơn hàng sắp đến (optional) → Hoàn
+                                tất giao hàng → chăm sóc sau mua</td>
+                        </tr>
+
+                        <tr>
+                            <td>Workflow trả hàng</td>
+                            <td>Yêu cầu hoàn trả → xét duyệt yêu cầu (approval) → Chuẩn bị gửi trả → Lấy hàng thành công
+                                → Vận chuyển về nhà phân phối → kiểm tra hàng trả → Xác nhận hoàn tiền → Hoàn tất hoàn
+                                tiền</td>
+                        </tr>
+                    </table>
+                </section>
+                <section id="bundlelifecycle">
+                    <h2>4.2. Lifecycle của Bundle</h2>
+
+                    <h3>Bundle State Machine</h3>
+
+                    <pre>
+OPEN
+↓
+ACTIVE
+↓
+RECONCILING
+↓
+CLOSED
+↓
+ARCHIVED
+</pre>
+
+                    <table>
+                        <tr>
+                            <th>State</th>
+                            <th>Ý nghĩa</th>
+                        </tr>
+
+                        <tr>
+                            <td>OPEN</td>
+                            <td>Bundle vừa được tạo</td>
+                        </tr>
+
+                        <tr>
+                            <td>ACTIVE</td>
+                            <td>Workflow đang gửi tin</td>
+                        </tr>
+
+                        <tr>
+                            <td>RECONCILING</td>
+                            <td>Billing engine đang tính toán phí cuối cùng</td>
+                        </tr>
+
+                        <tr>
+                            <td>CLOSED</td>
+                            <td>Bundle đã finalize và không thể thay đổi</td>
+                        </tr>
+
+                        <tr>
+                            <td>ARCHIVED</td>
+                            <td>Lưu trữ lịch sử</td>
+                        </tr>
+                    </table>
+                </section>
+                <section id="bundledesign">
+                    <h2>4.3. Thiết kế Bundle</h2>
+                    <h3>Doanh nghiệp thiết kế workflow</h3>
+
+                    <p>
+                        Merchant tạo workflow trực tiếp trên ZBS Portal.
+                    </p>
+                    <p>
+                        Ví dụ workflow đặt hàng có thể bao gồm các bước:
+                    </p>
+                    <table>
+                        <tr>
+                            <th>Step</th>
+                            <th>Template Message</th>
+                        </tr>
+
+                        <tr>
+                            <td>Step 1</td>
+                            <td>Order Confirmed</td>
+                        </tr>
+
+                        <tr>
+                            <td>Step 2</td>
+                            <td>Shipping Update</td>
+                        </tr>
+
+                        <tr>
+                            <td>Step 3</td>
+                            <td>Delivery Reminder</td>
+                        </tr>
+
+                        <tr>
+                            <td>Step 4</td>
+                            <td>Delivered Successfully</td>
+                        </tr>
+                    </table>
+
+                    <p>
+                        Sau khi tạo:
+                    </p>
+
+                    <pre>
+System generate workflow_id
+</pre>
+
+                    <p>
+                        Workflow này sẽ được dùng xuyên suốt customer lifecycle.
+                    </p>
+
+
+
+
+                    <h3>Định danh Bundle</h3>
+
+                    <p>
+                        Bundle được định danh bằng:
+                    </p>
+
+                    <table>
+                        <tr>
+                            <th>Field</th>
+                            <th>Description</th>
+                        </tr>
+
+                        <tr>
+                            <td>workflow_id</td>
+                            <td>Unique workflow identifier</td>
+                        </tr>
+
+                        <tr>
+                            <td>workflow_type</td>
+                            <td>order / refund / payment</td>
+                        </tr>
+
+                        <tr>
+                            <td>merchant_id</td>
+                            <td>Business owner</td>
+                        </tr>
+
+                        <tr>
+                            <td>customer_id</td>
+                            <td>End-user</td>
+                        </tr>
+
+                        <tr>
+                            <td>workflow_steps</td>
+                            <td>Total designed steps</td>
+                        </tr>
+
+                        <tr>
+                            <td>workflow_status</td>
+                            <td>OPEN / ACTIVE / RECONCILING / CLOSED / ARCHIVED</td>
+                        </tr>
+
+                        <tr>
+                            <td>ttl_expiry</td>
+                            <td>Workflow expiration</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section id="charging">
+                    <h2>5. Pricing & Billing Logic</h2>
+                    <h2>5.1. PricingLogic</h2>
+                    <p>
+                        Hiện tại, ZBS tính phí theo từng message sau khi delivery thành công.
+                    </p>
+
+                    <p>
+                        Đề xuất mới vẫn giữ nguyên nguyên tắc này nhưng bổ sung cơ chế reconciliation theo bundle.
+                    </p>
+
+                    <h3>Billing Flow đề xuất</h3>
+
+                    <pre>
+Message Sent
+→ Delivery Attempted
+→ Delivery Confirmed
+→ Bundle Reconciliation
+→ Final Settlement
+</pre>
+
+                    <p>
+                        Billing cần xử lý bất đồng bộ vì:
+                    </p>
+
+                    <ul>
+                        <li>delivery callback có thể đến trễ</li>
+                        <li>message có thể retry nhiều lần</li>
+                        <li>có thể fail từng phần</li>
+                        <li>event delivery có thể đến không đúng thứ tự</li>
+                    </ul>
+
+                    <h3>Pricing Logic</h3>
+
+
+
+
+
+                    <pre>
+Phí Bundle
+=
+Phí base của bundle
++ Phí từng message trong workflow
++ (Phí message ngoài thiết kế nếu có)
+</pre>
+                    <table>
+                        <tr>
+                            <th>Loại phí</th>
+                            <th>Giá trị</th>
+                        </tr>
+
+                        <tr>
+                            <td>Phí base của bundle</td>
+                            <td>Tổng chi phí của từng message trong workflow (theo giá stand alone)
+                                / số bước thiết kế * 2</td>
+                        </tr>
+
+                        <tr>
+                            <td>Phí từng message trong workflow</td>
+                            <td>100đ (tính từ message thứ 2)</td>
+                        </tr>
+
+                        <tr>
+                            <td>phí message ngoài thiết kế</td>
+                            <td>100đ</td>
+                        </tr>
+                    </table>
+                    <h3>Ví dụ</h3>
+
+                    <table>
+                        <tr>
+                            <th>Step</th>
+                            <th>Current Standalone Price</th>
+                        </tr>
+
+                        <tr>
+                            <td>Order Confirmed</td>
+                            <td>300đ</td>
+                        </tr>
+
+                        <tr>
+                            <td>Shipping Update</td>
+                            <td>300đ</td>
+                        </tr>
+
+                        <tr>
+                            <td>Reminder</td>
+                            <td>200đ</td>
+                        </tr>
+
+                        <tr>
+                            <td>Delivered</td>
+                            <td>300đ</td>
+                        </tr>
+                    </table>
+
+                    <p>
+                        Standalone total:
+                    </p>
+
+                    <pre>
+1,100đ
+</pre>
+
+                    <h3>Workflow Bundle Pricing</h3>
+
+                    <table>
+                        <tr>
+                            <th>Component</th>
+                            <th>Price</th>
+                        </tr>
+
+                        <tr>
+                            <td>Phí base của bundle</td>
+                            <td>1100 / 4 × 2 = 550đ (1100đ - phí standalone / 4 bước × 2)</td>
+                        </tr>
+
+                        <tr>
+                            <td>4 bước thiết kế</td>
+                            <td>3 × 100đ = 300đ (chỉ tính bước thứ 2 trở đi)</td>
+                        </tr>
+
+                        <tr>
+                            <td>Total</td>
+                            <td>850đ</td>
+                        </tr>
+                    </table>
+
+                    <h3>Extra Message</h3>
+
+                    <p>
+                        Nếu merchant gửi vượt quá số step đã thiết kế:
+                    </p>
+
+                    <pre>
+                    +100đ / extra message
+                    </pre>
+                    <div class="highlight">
+                        Chúng tôi khuyến khích merchant tuân thủ theo workflow đã thiết kế để đảm bảo trải nghiệm khách
+                        hàng tốt nhất, nhưng vẫn cho phép linh hoạt nếu có nhu cầu gửi thêm thông tin ngoài thiết kế ban
+                        đầu.
+                        Phí Bundle đã được chúng tôi thiết kế để đảm bảo rằng ngay cả khi có một số message không được
+                        tính phí (do delivery trễ hoặc thất bại), merchant vẫn sẽ được hưởng lợi từ mức giá ưu đãi của
+                        bundle nếu phần lớn workflow được thực hiện thành công trong khung thời gian quy định.
+                    </div>
+                </section>
+
+
+                <!-- ======================================================= -->
+                <section id="deliveryrule">
+                    <h2>5.2. Quy tắc tính phí trong 2 giờ</h2>
+
+                    <p>
+                        Hiện tại, ZBS chỉ tính phí nếu message được delivery trong vòng 2 giờ.
+                    </p>
+
+
+
+                    <h3>Nguyên tắc chính</h3>
+
+                    <div class="principle">
+                        Quy tắc 2 giờ áp dụng trên từng message, không áp dụng trên toàn bundle.
+                    </div>
+
+                    <h3>Logic</h3>
+
+                    <pre>
+Một message chỉ được tính phí nếu:
+
+delivery_time - send_time <= 2 giờ
+</pre>
+                    <table>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Billing Result</th>
+                        </tr>
+
+                        <tr>
+                            <td>Delivered &lt; 2h</td>
+                            <td>Charged</td>
+                        </tr>
+
+                        <tr>
+                            <td>Delivered &gt; 2h</td>
+                            <td>Not charged</td>
+                        </tr>
+
+                        <tr>
+                            <td>Delivery failed</td>
+                            <td>Not charged</td>
+                        </tr>
+
+                        <tr>
+                            <td>Partial workflow success</td>
+                            <td>Only valid messages charged</td>
+                        </tr>
+                    </table>
+                    <h3>Ví dụ</h3>
+
+                    <table>
+                        <tr>
+                            <th>Message</th>
+                            <th>Thời gian delivery</th>
+                            <th>Tính phí?</th>
+                        </tr>
+
+                        <tr>
+                            <td>Xác nhận đơn hàng</td>
+                            <td>3 phút</td>
+                            <td>Có</td>
+                        </tr>
+
+                        <tr>
+                            <td>Cập nhật vận chuyển</td>
+                            <td>15 phút</td>
+                            <td>Có</td>
+                        </tr>
+
+                        <tr>
+                            <td>Nhắc giao hàng</td>
+                            <td>3 giờ 10 phút</td>
+                            <td>Không</td>
+                        </tr>
+                    </table>
+
+                    <p>
+                        Bundle vẫn hợp lệ dù một số message không được tính phí.
+                    </p>
+
+                    <p>
+                        Giá cuối cùng được tính trong bước reconciliation dựa trên các message hợp lệ.
+                    </p>
+
+                    <!-- ======================================================= -->
+                </section>
+
+                <section id="abuse">
+                    <h2>6. Cơ chế chống lạm dụng</h2>
+
+                    <p>
+                        Bundle pricing tạo ra incentive giảm giá nên cần có cơ chế chống abuse chặt chẽ.
+                    </p>
+
+                    <h3>Rủi ro 1 — Spam marketing giả dạng workflow</h3>
+
+                    <p>
+                        Doanh nghiệp có thể cố tình gắn bundle cho các chiến dịch marketing.
+                    </p>
+
+                    <h4>Giải pháp</h4>
+
+                    <ul>
+                        <li>Whitelist các bundle type được hỗ trợ</li>
+                        <li>Kiểm tra compatibility giữa bundle type và template category</li>
+                        <li>Phát hiện hành vi bất thường</li>
+                        <li>Moderation review cho workflow đáng ngờ</li>
+                    </ul>
+
+                    <h3>Rủi ro 2 — Kéo dài bundle vô hạn</h3>
+
+                    <p>
+                        Doanh nghiệp có thể liên tục thêm message để duy trì mức giá thấp.
+                    </p>
+
+                    <h4>Giải pháp</h4>
+
+                    <table>
+                        <tr>
+                            <th>Constraint</th>
+                            <th>Ví dụ</th>
+                        </tr>
+
+                        <tr>
+                            <td>Số lượng message tối đa</td>
+                            <td>9 messages</td>
+                        </tr>
+
+                        <tr>
+                            <td>Thời gian sống tối đa</td>
+                            <td>tuỳ thuộc vào workflow type</td>
+                        </tr>
+
+
+                    </table>
+                    <h4>Time-to-Live (TTL) by Workflow Type</h4>
+                    <table>
+                        <tr>
+                            <th>Workflow Type</th>
+                            <th>TTL</th>
+                        </tr>
+
+                        <tr>
+                            <td>Order Workflow</td>
+                            <td>7 ngày</td>
+                        </tr>
+
+                        <tr>
+                            <td>Refund Workflow</td>
+                            <td>14 ngày</td>
+                        </tr>
+
+
+                    </table>
+
+                    <h3>Rủi ro 3 — Reuse workflow_id</h3>
+
+                    <p>
+                        Doanh nghiệp có thể tái sử dụng workflow_id vô thời hạn.
+                    </p>
+
+                    <h4>Giải pháp</h4>
+
+                    <ul>
+                        <li>Bundle đã đóng không thể mở lại</li>
+                        <li>Phát hiện replay workflow</li>
+                        <li>Tăng phí extra message</li>
+                        <li>Khóa workflow hết hạn</li>
+                    </ul>
+
+                    <h3>Rủi ro 4 — Abuse thông qua retry</h3>
+
+                    <p>
+                        Doanh nghiệp retry message để hưởng pricing thấp hơn.
+                    </p>
+
+                    <h4>Giải pháp</h4>
+
+                    <ul>
+                        <li>Idempotency key</li>
+                        <li>Theo dõi retry chain</li>
+                        <li>Phát hiện duplicate message</li>
+                    </ul>
+
+                    <!-- ======================================================= -->
+                </section>
+                <section id="metrics">
+                    <h2>7. Success Metrics</h2>
+
+                    <table>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Mục tiêu</th>
+                        </tr>
+
+                        <tr>
+                            <td>Tỷ lệ sử dụng bundle</td>
+                            <td>Đo adoption của doanh nghiệp</td>
+                        </tr>
+
+                        <tr>
+                            <td>Tỷ lệ hoàn thành workflow</td>
+                            <td>Đo chất lượng communication</td>
+                        </tr>
+
+                        <tr>
+                            <td>Tỷ lệ phát hiện abuse</td>
+                            <td>Đảm bảo trust & safety</td>
+                        </tr>
+
+                        <tr>
+                            <td>Chi phí communication hiệu quả</td>
+                            <td>Đánh giá business value</td>
+                        </tr>
+
+                        <tr>
+                            <td>Tác động doanh thu</td>
+                            <td>Đảm bảo sustainability</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <!-- ======================================================= -->
+
+                <h2>8. Kết luận</h2>
+
+                <p>
+                    Giải pháp Multi-Message Bundle giúp ZBS chuyển từ mô hình định giá theo từng message sang mô
+                    hình
+                    định giá theo workflow.
+                </p>
+
+
+
+                <!-- ======================================================= -->
+
+
+
+</body>
+
+</html>
