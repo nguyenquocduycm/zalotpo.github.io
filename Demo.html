@@ -188,6 +188,49 @@
             border-color: var(--accent)
         }
 
+        /* Custom picker for consistent dropdown height */
+        .custom-picker {
+            position: relative;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            border-radius: 8px;
+            background: #fbfdff;
+            padding: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .custom-picker .custom-picker-value {
+            font-size: 14px;
+        }
+
+        .custom-picker .custom-options {
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border: 1px solid #e6eefb;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(2, 6, 23, 0.06);
+            z-index: 60;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .custom-picker.open .custom-options {
+            display: block;
+        }
+
+        .custom-picker .option {
+            padding: 10px 12px;
+            cursor: pointer;
+        }
+
+        .custom-picker .option:hover {
+            background: #f1f5f9;
+        }
+
         .shift-list {
             display: flex;
             gap: 8px;
@@ -648,22 +691,23 @@
                             </div>
 
                             <div class="field">
-                                <div style = "display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                <label>Số lượng người(*): </label>
                                 <div
-                                    style="display:flex;border-radius:8px;overflow:hidden;border:1.5px solid #dbe3ea;max-width:120px;width:100%;height:30px;background:white;">
-                                    <button type="button" onclick="decreasePlayer()"
-                                        style="flex:0.4;border:none;background:#f8fafc;font-size:22px;color:#64748b;cursor:pointer;transition:background .2s;">-</button>
-                                    <div id="playerCount"
-                                        style="flex:1;background:#59a9ea;color:white;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold;">
-                                        1</div>
-                                    <button type="button" onclick="increasePlayer()"
-                                        style="flex:0.4;border:none;background:#f8fafc;font-size:22px;color:#64748b;cursor:pointer;transition:background .2s;">+</button>
+                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                    <label>Số lượng người(*): </label>
+                                    <div
+                                        style="display:flex;border-radius:8px;overflow:hidden;border:1.5px solid #dbe3ea;max-width:120px;width:100%;height:30px;background:white;">
+                                        <button type="button" onclick="decreasePlayer()"
+                                            style="flex:0.4;border:none;background:#f8fafc;font-size:22px;color:#64748b;cursor:pointer;transition:background .2s;">-</button>
+                                        <div id="playerCount"
+                                            style="flex:1;background:#59a9ea;color:white;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold;">
+                                            1</div>
+                                        <button type="button" onclick="increasePlayer()"
+                                            style="flex:0.4;border:none;background:#f8fafc;font-size:22px;color:#64748b;cursor:pointer;transition:background .2s;">+</button>
+                                    </div>
+                                    <select id="players" style="display:none;">
+                                        <option>1 người</option>
+                                    </select>
                                 </div>
-                                <select id="players" style="display:none;">
-                                    <option>1 người</option>
-                                </select>
-                            </div>
                             </div>
                             <div style="margin-top:18px;">
 
@@ -704,24 +748,28 @@
                                     <div
                                         style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px;">
 
-                                        <div
-                                            style="background:#dcfce7;border-radius:16px;padding:18px;text-align:center;font-weight:700;color:#166534;">
-                                            Sân 1<br /><span style="font-size:13px;font-weight:500;">Trống</span>
+                                        <div id="court1"
+                                            style="border-radius:16px;padding:18px;text-align:center;font-weight:700;">
+                                            Sân 1<br /><span class="court-status"
+                                                style="font-size:13px;font-weight:500;">Trống</span>
                                         </div>
 
-                                        <div
-                                            style="background:#fee2e2;border-radius:16px;padding:18px;text-align:center;font-weight:700;color:#991b1b;">
-                                            Sân 2<br /><span style="font-size:13px;font-weight:500;">Đã đặt</span>
+                                        <div id="court2"
+                                            style="border-radius:16px;padding:18px;text-align:center;font-weight:700;">
+                                            Sân 2<br /><span class="court-status"
+                                                style="font-size:13px;font-weight:500;">Trống</span>
                                         </div>
 
-                                        <div
-                                            style="background:#dcfce7;border-radius:16px;padding:18px;text-align:center;font-weight:700;color:#166534;">
-                                            Sân 3<br /><span style="font-size:13px;font-weight:500;">Trống</span>
+                                        <div id="court3"
+                                            style="border-radius:16px;padding:18px;text-align:center;font-weight:700;">
+                                            Sân 3<br /><span class="court-status"
+                                                style="font-size:13px;font-weight:500;">Trống</span>
                                         </div>
 
-                                        <div
-                                            style="background:#fee2e2;border-radius:16px;padding:18px;text-align:center;font-weight:700;color:#991b1b;">
-                                            Sân 4<br /><span style="font-size:13px;font-weight:500;">Đã đặt</span>
+                                        <div id="court4"
+                                            style="border-radius:16px;padding:18px;text-align:center;font-weight:700;">
+                                            Sân 4<br /><span class="court-status"
+                                                style="font-size:13px;font-weight:500;">Trống</span>
                                         </div>
 
                                     </div>
@@ -754,11 +802,19 @@
                             <div class="form-grid row-2">
                                 <div class="field">
                                     <label>Bắt đầu(*)</label>
-                                    <input type="time" id="startTime" />
+                                    <select id="startTime" style="display:none"></select>
+                                    <div class="custom-picker" id="startTimePicker" tabindex="0">
+                                        <div class="custom-picker-value" id="startTimeValue">-- Chọn giờ --</div>
+                                        <div class="custom-options" id="startTimeOptions"></div>
+                                    </div>
                                 </div>
                                 <div class="field">
                                     <label>Kết thúc(*)</label>
-                                    <input type="time" id="endTime" />
+                                    <select id="endTime" style="display:none"></select>
+                                    <div class="custom-picker" id="endTimePicker" tabindex="0">
+                                        <div class="custom-picker-value" id="endTimeValue">-- Chọn giờ --</div>
+                                        <div class="custom-options" id="endTimeOptions"></div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -851,16 +907,11 @@
 
                         <div class="booking-item">
                             <span>Khung giờ</span>
-                            <strong>19:00 - 21:00</strong>
+                            <strong id="confirmTime">-</strong>
                         </div>
 
                         <div class="booking-item">
                             <span>Sân</span>
-                            <strong>Sân 1</strong>
-                        </div>
-
-                        <div class="booking-item">
-                            <span>Loại booking</span>
                             <strong id="confirmType">-</strong>
                         </div>
 
@@ -875,7 +926,7 @@
                     </div>
 
                     <button class="pay-btn">
-                        Thanh toán ngay — 360.000đ
+                        Thanh toán ngay — 300.000đ
                     </button>
 
                 </div>
@@ -960,13 +1011,37 @@
 
 
         function goToPayment() {
+            // Validation for required fields
+            const name = (document.getElementById('name').value || '').trim();
+            const email = (document.getElementById('email').value || '').trim();
+            const phone = (document.getElementById('phone').value || '').trim();
+            const date = document.getElementById('date').value;
+            const court = document.getElementById('courtSelect').value;
+            const start = document.getElementById('startTime').value;
+            const end = document.getElementById('endTime').value;
 
-            document.getElementById('confirmName').innerText = document.getElementById('name').value || '-';
-            document.getElementById('confirmEmail').innerText = document.getElementById('email').value || '-';
-            document.getElementById('confirmPhone').innerText = document.getElementById('phone').value || '-';
+            const missing = [];
+            if (!name) missing.push('Tên người đặt(*)');
+            if (!email) missing.push('Email(*)');
+            if (!phone) missing.push('Số điện thoại(*)');
+            if (!date) missing.push('Ngày đặt(*)');
+            if (!court) missing.push('Chọn sân(*)');
+            if (!start) missing.push('Bắt đầu(*)');
+            if (!end) missing.push('Kết thúc(*)');
+
+            if (missing.length) {
+                alert('Vui lòng điền: ' + missing.join(', '));
+                return;
+            }
+
+            document.getElementById('confirmName').innerText = name || '-';
+            document.getElementById('confirmEmail').innerText = email || '-';
+            document.getElementById('confirmPhone').innerText = phone || '-';
             document.getElementById('confirmPlayers').innerText = currentPlayer + ' người';
-            document.getElementById('confirmDate').innerText = document.getElementById('date').value || '-';
-            document.getElementById('confirmType').innerText = document.getElementById('courtSelect').value || '-';
+            document.getElementById('confirmDate').innerText = date || '-';
+            const courtText = document.getElementById('courtSelect').selectedOptions[0]?.text || court;
+            document.getElementById('confirmType').innerText = courtText || '-';
+            document.getElementById('confirmTime').innerText = (start && end) ? `${start} - ${end}` : '-';
 
             document.getElementById('tab-booking').style.display = 'none';
             document.getElementById('tab-payment').style.display = 'block';
@@ -1021,28 +1096,28 @@
 
             <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;">
 
-                <div style="background:#dcfce7;padding:40px;border-radius:18px;text-align:center;font-weight:bold;">
+                <div id="modalCourt1" style="padding:40px;border-radius:18px;text-align:center;font-weight:bold;">
                     Sân 1
                     <br /><br />
-                    Available
+                    <span class="court-status">Available</span>
                 </div>
 
-                <div style="background:#dcfce7;padding:40px;border-radius:18px;text-align:center;font-weight:bold;">
+                <div id="modalCourt2" style="padding:40px;border-radius:18px;text-align:center;font-weight:bold;">
                     Sân 2
                     <br /><br />
-                    Available
+                    <span class="court-status">Available</span>
                 </div>
 
-                <div style="background:#fef3c7;padding:40px;border-radius:18px;text-align:center;font-weight:bold;">
+                <div id="modalCourt3" style="padding:40px;border-radius:18px;text-align:center;font-weight:bold;">
                     Sân 3
                     <br /><br />
-                    Reserved
+                    <span class="court-status">Available</span>
                 </div>
 
-                <div style="background:#dcfce7;padding:40px;border-radius:18px;text-align:center;font-weight:bold;">
+                <div id="modalCourt4" style="padding:40px;border-radius:18px;text-align:center;font-weight:bold;">
                     Sân 4
                     <br /><br />
-                    Available
+                    <span class="court-status">Available</span>
                 </div>
 
             </div>
@@ -1061,6 +1136,309 @@
             document.getElementById('courtModal').style.display = 'none';
         }
 
+    </script>
+
+    <script>
+        // Helper to set court element status styling and text
+        function setCourtStatus(el, status, isModal) {
+            if (!el) return;
+            const statusSpan = el.querySelector('.court-status');
+            if (status === 'available') {
+                el.style.background = isModal ? '#dcfce7' : '#dcfce7';
+                el.style.color = isModal ? '#166534' : '#166534';
+                if (statusSpan) statusSpan.innerText = isModal ? 'Available' : 'Trống';
+            } else {
+                el.style.background = isModal ? '#fee2e2' : '#fee2e2';
+                el.style.color = isModal ? '#991b1b' : '#991b1b';
+                if (statusSpan) statusSpan.innerText = isModal ? 'Reserved' : 'Đã đặt';
+            }
+        }
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        // Sync end time to be start + 30 minutes (if start provided)
+        function syncEndTime(startValue) {
+            if (!startValue) return;
+            const parts = startValue.split(':');
+            if (parts.length !== 2) return;
+            let hh = parseInt(parts[0], 10);
+            let mm = parseInt(parts[1], 10);
+            mm += 30;
+            if (mm >= 60) {
+                mm -= 60;
+                hh += 1;
+            }
+            if (hh >= 24) hh = 23, mm = 59;
+            const hhStr = hh.toString().padStart(2, '0');
+            const mmStr = mm.toString().padStart(2, '0');
+            const endEl = document.getElementById('endTime');
+            if (endEl) {
+                endEl.value = `${hhStr}:${mmStr}`;
+                // trigger change so custom picker display updates
+                endEl.dispatchEvent(new Event('change'));
+            }
+        }
+
+        var reservedCourts = [];
+
+        function timeToMinutes(t) {
+            if (!t) return null;
+            const p = t.split(':');
+            if (p.length !== 2) return null;
+            return parseInt(p[0], 10) * 60 + parseInt(p[1], 10);
+        }
+
+        // Called when date, court or start/end time changes
+        function updateStatusAndPrice() {
+            const date = document.getElementById('date').value;
+            //const court = document.getElementById('courtSelect').value;
+            const start = document.getElementById('startTime').value;
+            const end = document.getElementById('endTime').value;
+            const priceEl = document.getElementById('price');
+
+            //set empty court selection
+            document.getElementById('courtSelect').value = '';
+            // reset all to available
+            for (let i = 1; i <= 4; i++) {
+                setCourtStatus(document.getElementById('court' + i), 'available', false);
+                setCourtStatus(document.getElementById('modalCourt' + i), 'available', true);
+            }
+            //console.log('Checking availability for', { date, start, end });
+            if (date && start && end) {
+                const map = { san1: 1, san2: 2, san3: 3, san4: 4 };
+                //const idx = map[court];
+                // randomly reserve 2 courts to demonstrate real-time status
+                reservedCourts = [];
+                while (reservedCourts.length < 1) {
+                    const rand = getRandomInt(1, 4);
+                    if (!reservedCourts.includes(rand)) {
+                        reservedCourts.push(rand);
+                        setCourtStatus(document.getElementById('court' + rand), 'reserved', false);
+                        setCourtStatus(document.getElementById('modalCourt' + rand), 'reserved', true);
+                    }
+                }
+                // if (idx) {
+                //     if (!reservedCourts.includes(idx)) {
+                //         setCourtStatus(document.getElementById('court' + idx), 'reserved', false);
+                //         setCourtStatus(document.getElementById('modalCourt' + idx), 'reserved', true);
+                //     } else {
+                //         alert('Xin lỗi, sân đã được đặt bởi người khác. Vui lòng chọn sân khác hoặc khung giờ khác.');
+                //         document.getElementById('courtSelect').value = '';
+                //         if (priceEl) priceEl.value = '';
+                //     }
+                // }
+
+                // set price to 300k when those three chosen
+                    if (priceEl) priceEl.value = '300.000đ';
+                } else {
+                    if (priceEl) priceEl.value = '';
+            }
+        }
+
+        function updateCourtSelection() {
+            const date = document.getElementById('date').value;
+            const court = document.getElementById('courtSelect').value;
+            const priceEl = document.getElementById('price');
+            const start = document.getElementById('startTime').value;
+            const end = document.getElementById('endTime').value;
+
+            for (let i = 1; i <= 4; i++) {
+                setCourtStatus(document.getElementById('court' + i), 'available', false);
+                setCourtStatus(document.getElementById('modalCourt' + i), 'available', true);
+                if (i == reservedCourts[0] || i == reservedCourts[1]) {
+                    setCourtStatus(document.getElementById('court' + i), 'reserved', false);
+                    setCourtStatus(document.getElementById('modalCourt' + i), 'reserved', true);
+                }
+            }
+
+            //console.log('Selected court', { reservedCourts });
+            if (date && court && start && end) {
+                const map = { san1: 1, san2: 2, san3: 3, san4: 4 };
+                const idx = map[court];
+                if (idx) {
+                    if (!reservedCourts.includes(idx)) {
+                        setCourtStatus(document.getElementById('court' + idx), 'reserved', false);
+                        setCourtStatus(document.getElementById('modalCourt' + idx), 'reserved', true);
+                    } else {
+                        alert('Xin lỗi, sân đã được đặt bởi người khác. Vui lòng chọn sân khác hoặc khung giờ khác.');
+                        document.getElementById('courtSelect').value = '';
+                        if (priceEl) priceEl.value = '';
+                    }
+                }
+                //console.log('price', priceEl.value);
+
+                // set price to 300k when those three chosen
+                if (priceEl) {
+                     priceEl.value = '300.000đ';
+                } else {
+                    if (priceEl) priceEl.value = '';
+                }
+            }
+            // else {
+            //     for (let i = 1; i <= 4; i++) {
+            //         setCourtStatus(document.getElementById('court' + i), 'available', false);
+            //         setCourtStatus(document.getElementById('modalCourt' + i), 'available', true);
+            //     }
+            //     if (priceEl) priceEl.value = '';
+            // }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize all courts as available on first load
+            for (let i = 1; i <= 4; i++) {
+                setCourtStatus(document.getElementById('court' + i), 'available', false);
+                setCourtStatus(document.getElementById('modalCourt' + i), 'available', true);
+            }
+
+            // populate time selects with 30-minute steps (iPhone-like wheel options)
+            function populateTimeOptions(fromHour = 6, toHour = 23, stepMin = 30) {
+                const startEl = document.getElementById('startTime');
+                const endEl = document.getElementById('endTime');
+                if (!startEl || !endEl) return;
+                startEl.innerHTML = '';
+                endEl.innerHTML = '';
+                // placeholder empty option so selects start null on load
+                const placeholder1 = document.createElement('option');
+                placeholder1.value = '';
+                placeholder1.text = '-- Chọn giờ --';
+                placeholder1.selected = true;
+                placeholder1.disabled = true;
+                startEl.appendChild(placeholder1);
+                const placeholder2 = document.createElement('option');
+                placeholder2.value = '';
+                placeholder2.text = '-- Chọn giờ --';
+                placeholder2.selected = true;
+                placeholder2.disabled = true;
+                endEl.appendChild(placeholder2);
+                for (let h = fromHour; h <= toHour; h++) {
+                    for (let m = 0; m < 60; m += stepMin) {
+                        const hh = h.toString().padStart(2, '0');
+                        const mm = m.toString().padStart(2, '0');
+                        const val = `${hh}:${mm}`;
+                        const opt1 = document.createElement('option');
+                        opt1.value = val;
+                        opt1.text = val;
+                        startEl.appendChild(opt1);
+                        const opt2 = document.createElement('option');
+                        opt2.value = val;
+                        opt2.text = val;
+                        endEl.appendChild(opt2);
+                    }
+                }
+            }
+
+            populateTimeOptions(6, 23, 30);
+
+            // attach change listeners
+            // build custom pickers from selects
+            function buildCustomPicker(selectId, pickerId, optionsContainerId, valueDisplayId) {
+                const selectEl = document.getElementById(selectId);
+                const picker = document.getElementById(pickerId);
+                const optionsContainer = document.getElementById(optionsContainerId);
+                const valueDisplay = document.getElementById(valueDisplayId);
+                if (!selectEl || !picker || !optionsContainer || !valueDisplay) return;
+
+                // populate options container from select
+                optionsContainer.innerHTML = '';
+                Array.from(selectEl.options).forEach(function (opt) {
+                    // skip placeholder/empty option in the visual list
+                    if (!opt.value) return;
+                    const div = document.createElement('div');
+                    div.className = 'option';
+                    div.innerText = opt.text;
+                    div.dataset.value = opt.value;
+                    div.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        selectEl.value = div.dataset.value;
+                        valueDisplay.innerText = div.innerText;
+                        picker.classList.remove('open');
+                        selectEl.dispatchEvent(new Event('change'));
+                    });
+                    optionsContainer.appendChild(div);
+                });
+
+                // open/close behavior
+                picker.addEventListener('click', function (e) {
+                    const opened = picker.classList.contains('open');
+                    // close any other pickers
+                    document.querySelectorAll('.custom-picker.open').forEach(p => p.classList.remove('open'));
+                    if (!opened) picker.classList.add('open');
+                });
+                // keep display in sync if select value changes programmatically
+                selectEl.addEventListener('change', function () {
+                    const sel = selectEl.selectedOptions[0];
+                    valueDisplay.innerText = (sel && sel.value) ? sel.text : '-- Chọn giờ --';
+                });
+            }
+
+            buildCustomPicker('startTime', 'startTimePicker', 'startTimeOptions', 'startTimeValue');
+            buildCustomPicker('endTime', 'endTimePicker', 'endTimeOptions', 'endTimeValue');
+
+            // prevent opening court select until date + start + end are chosen
+            const courtSelectEl = document.getElementById('courtSelect');
+            function guardCourtOpen(e) {
+                const dateVal = document.getElementById('date').value;
+                const startVal = document.getElementById('startTime').value;
+                const endVal = document.getElementById('endTime').value;
+                if (!(dateVal && startVal && endVal)) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    alert('bạn phải chọn ngày và giờ đặt');
+                    const d = document.getElementById('date');
+                    if (d) d.focus();
+                    return false;
+                }
+            }
+            if (courtSelectEl) {
+                courtSelectEl.addEventListener('mousedown', guardCourtOpen);
+                courtSelectEl.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') guardCourtOpen(e);
+                });
+            }
+
+            // attach change listeners to hidden selects
+            ['date', 'startTime', 'endTime'].forEach(function (id) {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('change', function (e) {
+                    if (id === 'startTime') {
+                        syncEndTime(e.target.value);
+                    }
+                    if (id === 'endTime') {
+                        // ensure end > start
+                        const startVal = document.getElementById('startTime').value;
+                        const endVal = e.target.value;
+                        const sMinutes = timeToMinutes(startVal);
+                        const eMinutes = timeToMinutes(endVal);
+                        if (sMinutes !== null && eMinutes !== null && eMinutes <= sMinutes) {
+                            alert('Giờ kết thúc phải lớn hơn giờ bắt đầu. Tự động đặt kết thúc = bắt đầu + 30 phút.');
+                            syncEndTime(startVal);
+                            return;
+                        }
+                    }
+                    // update UI and availability
+                    updateStatusAndPrice();
+                
+                });
+            });
+            ["courtSelect"].forEach(function (id) {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('change', function () {
+                    updateCourtSelection();
+                });
+
+                updateCourtSelection();
+            });
+            // close pickers when clicking outside
+            document.addEventListener('click', function (e) {
+                if (!e.target.closest('.custom-picker')) {
+                    document.querySelectorAll('.custom-picker.open').forEach(p => p.classList.remove('open'));
+                }
+            });
+
+            // run once to ensure price/status consistent
+            updateStatusAndPrice();
+        });
     </script>
 
 </body>
